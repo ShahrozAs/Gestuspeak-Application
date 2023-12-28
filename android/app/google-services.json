@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "552709284925",
+    "project_id": "clone-c5720",
+    "storage_bucket": "clone-c5720.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552709284925:android:63b4f81faf546d940bb654",
+        "android_client_info": {
+          "package_name": "com.example.gestuspeak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552709284925-tf532c3u85o5h5u78hiv2jl7j96cv29o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtsL5GHukO_jPw7qwsVJF6XGc7wpuaajs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552709284925-tf532c3u85o5h5u78hiv2jl7j96cv29o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
