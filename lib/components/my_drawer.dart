@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestuspeak/pages/edit_profilePage.dart';
 import 'package:gestuspeak/pages/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -7,6 +8,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+    
       backgroundColor: Color(0xffF2F2F2),
       child: Padding(
         padding: const EdgeInsets.only(left:25.0),
@@ -35,6 +37,8 @@ class MyDrawer extends StatelessWidget {
                     title: Text("E D I T  P R O F I L E"),
                     onTap: () {
                       Navigator.pop(context);
+                       Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
                     },
                   ),
                 ),

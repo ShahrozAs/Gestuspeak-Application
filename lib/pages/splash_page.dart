@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:gestuspeak/auth/auth.dart';
 import 'package:gestuspeak/pages/login_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
 
     super.initState();
-    Timer(const Duration(seconds: 3), () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(onTap: (){},),));});
+    Timer(const Duration(seconds: 3), () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthPage(),));});
   }
 
   @override

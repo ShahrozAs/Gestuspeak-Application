@@ -4,6 +4,8 @@ import 'package:gestuspeak/auth/auth.dart';
 import 'package:gestuspeak/auth/login_or_register.dart';
 import 'package:gestuspeak/firebase_options.dart';
 import 'package:gestuspeak/pages/login_page.dart';
+import 'package:gestuspeak/pages/more_notespage.dart';
+import 'package:gestuspeak/pages/note_page.dart';
 import 'package:gestuspeak/pages/register_page.dart';
 import 'package:gestuspeak/pages/splash_page.dart';
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
       )
      
       ),
-      home:  AuthPage(),
+      home:  SplashPage(),
       debugShowCheckedModeBanner: false,
     );
   }
