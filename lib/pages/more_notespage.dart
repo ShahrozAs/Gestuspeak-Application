@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
-import 'package:gestuspeak/helper/resources.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
 import 'package:gestuspeak/pages/note_page.dart';
@@ -12,14 +9,6 @@ class MoreNotesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  String userName = "user";
-  String? userImage =
-      "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png";
-  final User? currentUser = FirebaseAuth.instance.currentUser!;
-
-
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -45,61 +34,53 @@ class MoreNotesPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.5,
       ),
-      drawer: const MyDrawer(),
-      body: Padding(
+      drawer:const MyDrawer(),
+      body:  Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 0.5,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: const Color(0xffF2F2F2)),
-                        width: double.infinity,
-                        // margin: EdgeInsets.only(left: 10, right: 10),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "This App is Under Developement",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontSize: 15),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon:
-                                          Icon(Icons.favorite_border_rounded)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.speaker)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.more_vert_rounded))
-                                ],
-                              )
-                            ],
-                          ),
+              Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                return Card(
+                    elevation: 0.5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xffF2F2F2)),
+                      width: double.infinity,
+                      // margin: EdgeInsets.only(left: 10, right: 10),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "This App is Under Developement",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: 15),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.favorite_border_rounded)),
+                                IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
+                                    ,  IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_rounded))
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                    );
-                  },
-                  itemCount: 15,
-                ),
-              ),
+                    ),
+                  );
+              },itemCount: 15,),),
             ],
-          )),
+          )        ),
+      
+         
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Color(0xffFFCB2D),
@@ -127,7 +108,7 @@ class MoreNotesPage extends StatelessWidget {
           // Handle navigation on item tap
           switch (index) {
             case 0:
-              Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotePage(),
@@ -153,9 +134,11 @@ class MoreNotesPage extends StatelessWidget {
             case 3:
               // Navigator.pushNamed(context, videosScreenRoute);
               break;
+       
           }
         },
       ),
+
     );
   }
 }

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
+import 'package:gestuspeak/helper/resources.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/more_notespage.dart';
 import 'package:gestuspeak/pages/note_page.dart';
@@ -10,9 +12,57 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   bool isSelect = true;
+  String nodes="Your Actions shows here";
+
+
 
   @override
   Widget build(BuildContext context) {
+
+  //   String userName = "user";
+  // String? userImage =
+  //     "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png";
+  // final User? currentUser = FirebaseAuth.instance.currentUser!;
+
+  // Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+  //   return await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(currentUser!.email)
+  //       .get();
+  // }
+  
+void saveVoiceNode() async {
+  try {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: AlertDialog(
+            actions: [Center(child: CircularProgressIndicator())],
+            title: Center(child: Text("Saving..")),
+          ),
+        );
+      },
+    );
+    
+    String resp = await storeData().saveVoiceNodes(nodes: nodes);
+    
+    Navigator.pop(context); // Close the saving dialog
+    
+    if (resp == "Success") {
+      // Optionally show a success message or perform any other action upon successful save
+      print("Node saved successfully!");
+    } else {
+      // Handle error case
+      print("Error occurred while saving node: $resp");
+    }
+  } catch (e) {
+    print("Error occurred: $e");
+    // Handle error case
+  }
+}
+
+
     return Scaffold(
       backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
@@ -75,7 +125,9 @@ class HomePage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("This App is Under Developement",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),),
+                              Expanded(child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Text(nodes??"You dont have text",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),))),
                               Align(
                               alignment: Alignment.bottomRight,
                                 child: Icon(Icons.speaker_rounded))
@@ -85,7 +137,10 @@ class HomePage extends StatelessWidget {
                        ),
                       
                     
-                          ElevatedButton(onPressed: (){}, child:Text("Add note"),style: ElevatedButton.styleFrom(
+                          ElevatedButton(onPressed: (){
+                             saveVoiceNode();
+
+                          }, child:Text("Add note"),style: ElevatedButton.styleFrom(
                             foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
                           ),)
                     ],

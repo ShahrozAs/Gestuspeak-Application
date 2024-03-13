@@ -49,36 +49,27 @@ class storeData {
 
   
 
-  // Future<String> saveVoiceNodes(
-  //     {required String caption,
-  //     required String name,
-  //     required String userImage,
-  //     }) async {
-  //   String resp = "Some Error Occured";
-  //   try {
-  //     if (caption.isNotEmpty || caption.isNotEmpty) {
-  //       final id = Timestamp.now();
-  //       String imageUrl = await uploadImageToStorage('${id}+postImage', file);
-  //       // databaseReference.child(user.email!).set({
-  //       //   'name': name,
-  //       //   'username': username,
-  //       //   'bio': bio,
-  //       //   'imageLink': imageUrl
-  //       // });
-  //       await _firestore.collection('UsersPost').add({
-  //         'name': name,
-  //         'caption': caption,
-  //         'imageLink': imageUrl,
-  //         'userImage': userImage,
-  //         'timestamp': Timestamp.now(),
-  //       });
-  //       resp = "Success";
-  //     }
-  //   } catch (e) {
-  //     resp = e.toString();
-  //   }
-  //   return resp;
-  // }
+  Future<String> saveVoiceNodes(
+      {required String nodes,
+    
+      }) async {
+    String resp = "Some Error Occured";
+    try {
+      if (nodes.isNotEmpty || nodes.isNotEmpty) {
+  
+        await _firestore.collection('UsersVoiceNodes').add({
+          'nodes': nodes,
+          'userEmail': user.email!,
+        
+          'timestamp': Timestamp.now(),
+        });
+        resp = "Success";
+      }
+    } catch (e) {
+      resp = e.toString();
+    }
+    return resp;
+  }
 
 
 
