@@ -21,7 +21,9 @@ class HomePage extends StatelessWidget {
            IconButton(onPressed: (){},icon: Icon(Icons.toggle_on,color: Color(0xffFFCB2D),)),
            Padding(
              padding: const EdgeInsets.only(right:10.0),
-             child: CircleAvatar(backgroundColor: Color(0xffF2F2F2),radius: 20,child: IconButton(onPressed: (){},icon: Icon(Icons.logout,color: Color(0xffFFCB2D),))),
+             child: CircleAvatar(backgroundColor: Color(0xffF2F2F2),radius: 20,child: IconButton(onPressed: (){
+              FirebaseAuth.instance.signOut();
+             },icon: Icon(Icons.logout,color: Color(0xffFFCB2D),))),
            ),
         ],
         backgroundColor: Colors.white,
@@ -29,84 +31,70 @@ class HomePage extends StatelessWidget {
       ),
       drawer: MyDrawer(),
       body: 
-       Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
+       SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+         child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  width: double.infinity,
+                  height: 300,
+                  child: Image.asset(
+                    'assets/images/hand.jpg',
+                    fit: BoxFit.contain,
+                    height: null,
+                    width: null,
+                    // height: 32,
+                  ),
                 ),
-                width: double.infinity,
-                height: 300,
-                child: Image.asset(
-                  'assets/images/hand.jpg',
-                  fit: BoxFit.contain,
-                  height: null,
-                  width: null,
-                  // height: 32,
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                width: double.infinity,
-                height: 480,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                ),
-
-                child: Column(
-                  children: [
-                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
-                      width: double.infinity,
+                Container(
+                  width: double.infinity,
+                   padding: const EdgeInsets.only(bottom:20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+         
+                  child: Column(
+                    children: [
+                       Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
+                        width: double.infinity,
+                      
+                         margin: EdgeInsets.all(10),
+                         height: 250,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("This App is Under Developement",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),),
+                              Align(
+                              alignment: Alignment.bottomRight,
+                                child: Icon(Icons.speaker_rounded))
+                            ],
+                          ),
+                        ) ,
+                       ),
+                      
                     
-                       margin: EdgeInsets.all(10),
-                       height: 250,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text("This App is Under Developement",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),),
-                      ) ,
-                     ),
-                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
-                      width: double.infinity,
-                    
-                       margin: EdgeInsets.all(10),
-                     
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text("This App is Under Developement",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),),
-                      ) ,
-                     ),
-                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
-                      width: double.infinity,
-                    
-                       margin: EdgeInsets.all(10),
-                     
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text("This App is Under Developement",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),),
-                      ) ,
-                     ),
+                          ElevatedButton(onPressed: (){}, child:Text("Add note"),style: ElevatedButton.styleFrom(
+                            foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
+                          ),)
+                    ],
+                  ),
                   
-                        ElevatedButton(onPressed: (){   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotePage(),
-                  ));}, child:Text("Add note"),style: ElevatedButton.styleFrom(
-                          foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
-                        ),)
-                  ],
-                ),
-                
-              )
-            ]),
-          ),
+                )
+              ]),
+            ),
+       ),
       
       
       bottomNavigationBar: BottomNavigationBar(
@@ -139,7 +127,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MoreNotesPage(),
+                    builder: (context) => NotePage(),
                   ));
               // Navigator.pushNamed(context, homeScreenRoute);
               break;

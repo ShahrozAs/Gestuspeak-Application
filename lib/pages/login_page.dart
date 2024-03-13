@@ -61,25 +61,25 @@ TextEditingController passwordEditController=TextEditingController();
                 SizedBox(height: 10,),
                 MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
                 SizedBox(height: 10,),
-                Row(
+               Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),),
+                  children: const [
+                     Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),),
                   ],
                 ),
          
-                SizedBox(height: 25,),
+               const SizedBox(height: 25,),
          
                 MyButton(text: "Login", onTap: Login),
-                SizedBox(height: 25,),
+               const SizedBox(height: 25,),
          
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account?"),
+                   const Text("Don't have an account?"),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text(" Register Here",
+                      child:const Text(" Register Here",
                       style: TextStyle(
                         fontWeight: FontWeight.bold
                       ),),

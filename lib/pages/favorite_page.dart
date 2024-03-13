@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
 import 'package:gestuspeak/pages/home_page.dart';
 import 'package:gestuspeak/pages/more_notespage.dart';
+import 'package:gestuspeak/pages/note_page.dart';
 
 class FavoriteNotesPage extends StatelessWidget {
   const FavoriteNotesPage({super.key});
@@ -34,309 +35,50 @@ class FavoriteNotesPage extends StatelessWidget {
         elevation: 0.5,
       ),
       drawer: MyDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
+      body:  Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                return Card(
+                    elevation: 0.5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xffF2F2F2)),
+                      width: double.infinity,
+                      // margin: EdgeInsets.only(left: 10, right: 10),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "This App is Under Developement",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: 15),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.favorite,color: Colors.red,)),
+                                IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
+                                    ,  IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_rounded))
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              elevation: 0.5,
-              // margin: EdgeInsets.only(left: 10,right: 10),
-
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xffF2F2F2)),
-                width: double.infinity,
-                // margin: EdgeInsets.only(left: 10, right: 10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border_rounded)),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+                    ),
+                  );
+              },itemCount: 15,),),
+            ],
+          )        ),
          
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -368,7 +110,7 @@ class FavoriteNotesPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MoreNotesPage(),
+                    builder: (context) => NotePage(),
                   ));
               // Navigator.pushNamed(context, homeScreenRoute);
               break;

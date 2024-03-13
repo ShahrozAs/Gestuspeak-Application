@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/helper/resources.dart';
+import 'package:gestuspeak/pages/favorite_page.dart';
+import 'package:gestuspeak/pages/home_page.dart';
+import 'package:gestuspeak/pages/note_page.dart';
 import 'package:gestuspeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:instagram_clone/helper/resources.dart';
@@ -191,6 +194,65 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
       ),
+       
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: Color(0xffFFCB2D),
+        unselectedItemColor: Color(0xff6B645D),
+
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pending_actions_outlined),
+            label: 'Notes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_outline_rounded),
+            label: 'favourite',
+          ),
+        ],
+
+        currentIndex: 1, // Set the initial index to Home
+        onTap: (index) {
+          // Handle navigation on item tap
+          switch (index) {
+            case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotePage(),
+                  ));
+              // Navigator.pushNamed(context, homeScreenRoute);
+              break;
+            case 1:
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ));
+              // Navigator.pushNamed(context, searchScreenRoute);
+              break;
+            case 2:
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoriteNotesPage(),
+                  ));
+              // Navigator.pushNamed(context, uploadScreenRoute);
+              break;
+            case 3:
+              // Navigator.pushNamed(context, videosScreenRoute);
+              break;
+       
+          }
+        },
+      ),
+
     );
   }
 }

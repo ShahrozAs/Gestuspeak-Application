@@ -1,12 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/auth/auth.dart';
-import 'package:gestuspeak/auth/login_or_register.dart';
+
 import 'package:gestuspeak/firebase_options.dart';
-import 'package:gestuspeak/pages/login_page.dart';
-import 'package:gestuspeak/pages/more_notespage.dart';
-import 'package:gestuspeak/pages/note_page.dart';
-import 'package:gestuspeak/pages/register_page.dart';
+
 import 'package:gestuspeak/pages/splash_page.dart';
 
 void main() async{
@@ -22,15 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GestuSpeak',
       theme: ThemeData(
-        colorScheme:ColorScheme.fromSeed(seedColor: Color(0xff6B645D),), 
-      textTheme: TextTheme(
+        colorScheme:ColorScheme.fromSeed(seedColor:const Color(0xff6B645D),), 
+      textTheme:const TextTheme(
       headlineLarge: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Color(0xff6B645D))
       )
      
       ),
-      home:  SplashPage(),
+      home: const SplashPage(),
       debugShowCheckedModeBanner: false,
     );
   }

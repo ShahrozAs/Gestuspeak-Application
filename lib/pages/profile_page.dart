@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
+import 'package:gestuspeak/pages/favorite_page.dart';
+import 'package:gestuspeak/pages/home_page.dart';
+import 'package:gestuspeak/pages/note_page.dart';
 import 'package:gestuspeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -103,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: CircleAvatar(
                                   radius: 90,
                                   foregroundImage: NetworkImage(
-                                      '${user!['imageLink'] != null ? user['imageLink'] : "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
+                                      '${user?['imageLink']?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
                                       //  "${user['imageLink']}"
                                       ),
                                 ),
@@ -111,9 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        user!['username'] != null
-                            ? user!['username']
-                            : "username",
+                        user?['username']?? "username",
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -146,9 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     SizedBox(
                                       width: 28,
                                     ),
-                                    Text(user['name'] != null
-                                        ? user['name']
-                                        : "null"),
+                                    Text(user?['name'] ?? "null"),
                                   ],
                                 ),
                                 SizedBox(
@@ -167,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
     SizedBox(width: 25),
     Expanded(
       child: Text(
-        user['live'] != null ? user['live'] : "null",
+        user?['live'] ?? "null",
         softWrap: true,
         // Other text styling properties can be added here
       ),
@@ -191,9 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     SizedBox(width: 28),
                                     Expanded(
                                       child: Text(
-                                        user['about'] != null
-                                            ? user['about']
-                                            : "null",
+                                        user?['about'] ?? "null",
                                         softWrap: true,
                                         // Other text styling properties can be added here
                                       ),
@@ -213,6 +210,64 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 }
               })),
+
+              bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: Color(0xffFFCB2D),
+        unselectedItemColor: Color(0xff6B645D),
+
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pending_actions_outlined),
+            label: 'Notes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_outline_rounded),
+            label: 'favourite',
+          ),
+        ],
+
+        currentIndex: 1, // Set the initial index to Home
+        onTap: (index) {
+          // Handle navigation on item tap
+          switch (index) {
+            case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotePage(),
+                  ));
+              // Navigator.pushNamed(context, homeScreenRoute);
+              break;
+            case 1:
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ));
+              // Navigator.pushNamed(context, searchScreenRoute);
+              break;
+            case 2:
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoriteNotesPage(),
+                  ));
+              // Navigator.pushNamed(context, uploadScreenRoute);
+              break;
+            case 3:
+              // Navigator.pushNamed(context, videosScreenRoute);
+              break;
+       
+          }
+        },
+      ),
     );
   }
 }

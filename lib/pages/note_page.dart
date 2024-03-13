@@ -16,6 +16,7 @@ class _NotePageState extends State<NotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
         actions: [
@@ -42,200 +43,178 @@ class _NotePageState extends State<NotePage> {
         elevation: 0,
       ),
       drawer: MyDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
-              ),
-              width: double.infinity,
-              height: 400,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 180,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xffF2F2F2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Image.asset(
-                              'assets/images/profile.png',
-                              width: 150,
-                              height: 150,
+      body: SingleChildScrollView(
+
+      
+        
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                width: double.infinity,
+                
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xffF2F2F2),
                             ),
-                          ),
-                        ),
-                        Container(
-                          width: 180,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xffF2F2F2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(0.0),
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Dummy Text",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.speaker)),
-                                    ],
-                                  )
-                                ],
+                              padding: const EdgeInsets.all(0.0),
+                              child: Image.asset(
+                                'assets/images/profile.png',
+                                width: 150,
+                                height: 150,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 55,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            hintText: "Search Text",
-                            labelText: "Search"),
+                          Container(
+                            width: 150,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xffF2F2F2),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(0.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Dummy Text",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!.copyWith(fontSize: 18),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.speaker)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
+                       SizedBox(
+                height: 25,
+              ),
+
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: TextField(
+                          
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.send),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText: "Search Text",
+                              labelText: "Search"),
+                              
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              width: double.infinity,
-              height: 375,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12), color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 3.0,
-                    width: 40,
-                    color: Colors.black,
-                  ),
-                  SizedBox(height: 20,),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Color(0xffF2F2F2)),
-                    width: double.infinity,
-                    margin: EdgeInsets.only(left:10,right: 10),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Color(0xffF2F2F2)),
-                    width: double.infinity,
-                                     margin: EdgeInsets.only(left:10,right: 10),
-
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Color(0xffF2F2F2)),
-                    width: double.infinity,
-                                     margin: EdgeInsets.only(left:10,right: 10),
-
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Color(0xffF2F2F2)),
-                    width: double.infinity,
-                                 margin: EdgeInsets.only(left:10,right: 10),
-
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        "This App is Under Developement",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ),
-SizedBox(height: 15,),
-                      ElevatedButton(onPressed: ()=>createBottomSheet(context), child:Text("See more"),style: ElevatedButton.styleFrom(
-                          foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
-                        ),)
-
-                ],
+              SizedBox(
+                height: 15,
               ),
-            )
-          ],
+
+              Container(
+             height: 315,
+                width: double.infinity,
+                padding: EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12), color: Colors.white),
+               
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                  
+                      Container(
+                        height: 3.0,
+                        width: 40,
+                        color: Colors.black,
+                      ),
+                      SizedBox(height: 20,),
+                  
+                    Expanded(
+                      child: ListView.builder(itemBuilder: (context, index) {
+                        return Container(
+                          
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Color(0xffF2F2F2)),
+                          width: double.infinity,
+                          margin: EdgeInsets.only(left:10,right: 10,bottom: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                
+                                  "This App is Under Developement...",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: 15),
+                                ),
+                                Icon(Icons.speaker),
+                              ],
+                            ),
+                          ),
+                        );
+                      },itemCount: 3,),
+                    ),
+
+
+                          SizedBox(height: 15,),
+                          ElevatedButton(onPressed: (){ Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MoreNotesPage(),
+                      ));}, child:Text("See more"),style: ElevatedButton.styleFrom(
+                              foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
+                            ),)
+                          
+                    ],
+                  ),
+                
+              )
+            ],
+          ),
         ),
+        
       ),
         
       bottomNavigationBar: BottomNavigationBar(
@@ -260,7 +239,7 @@ SizedBox(height: 15,),
           ),
         ],
 
-        currentIndex: 1, // Set the initial index to Home
+        currentIndex: 0, // Set the initial index to Home
         onTap: (index) {
           // Handle navigation on item tap
           switch (index) {
@@ -268,7 +247,7 @@ SizedBox(height: 15,),
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MoreNotesPage(),
+                    builder: (context) => NotePage(),
                   ));
               // Navigator.pushNamed(context, homeScreenRoute);
               break;
