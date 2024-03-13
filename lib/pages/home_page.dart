@@ -7,9 +7,21 @@ import 'package:gestuspeak/helper/resources.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/more_notespage.dart';
 import 'package:gestuspeak/pages/note_page.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class HomePage extends StatelessWidget {
+
   HomePage({super.key});
+
+
+  final FlutterTts flutterTts = FlutterTts();
+  Future<void> _speak(String text) async {
+  await flutterTts.setVolume(1.0);
+  await flutterTts.setSpeechRate(0.5);
+  await flutterTts.setPitch(1.0);
+  await flutterTts.setLanguage("en-US");
+  await flutterTts.speak(text);
+}
 
   bool isSelect = true;
   String nodes="This is my Laptop";
@@ -130,7 +142,12 @@ void saveVoiceNode() async {
                                 child: Text(nodes??"You dont have text",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),))),
                               Align(
                               alignment: Alignment.bottomRight,
-                                child: Icon(Icons.speaker_rounded))
+                                child:  IconButton(
+                                  onPressed: () {
+                                      _speak(nodes);
+                                  },
+                                  icon: Icon(Icons.speaker),
+                                ),)
                             ],
                           ),
                         ) ,

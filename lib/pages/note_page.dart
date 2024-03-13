@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:gestuspeak/helper/showOneNodeOnly.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
 import 'package:gestuspeak/pages/more_notespage.dart';
+import 'package:gestuspeak/pages/upload_image.dart';
+import 'package:image_picker/image_picker.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key});
@@ -25,6 +29,16 @@ class _NotePageState extends State<NotePage> {
         .collection('Users')
         .doc(currentUser!.email)
         .get();
+  }
+
+  
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
   }
 
   @override
@@ -94,22 +108,29 @@ class _NotePageState extends State<NotePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xffF2F2F2),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: Image.network(
-                               '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}',
-                                width: 150,
-                                height: 150,
+                          InkWell(
+                        onTap: selectImage,
+                        child: _image != null
+                            ? Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: CircleAvatar(
+                                  radius: 90,
+                                  backgroundImage: MemoryImage(
+                                    (_image!),
+                                  ),
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: CircleAvatar(
+                                  radius: 90,
+                                  foregroundImage: NetworkImage(
+                                      '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
+                                      //  "${user['imageLink']}"
+                                      ),
+                                ),
                               ),
-                            ),
-                          ),
+                      ),
                           Container(
                             width: 150,
                             height: 150,

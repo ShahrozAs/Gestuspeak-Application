@@ -26,36 +26,6 @@ Future<void> _speak(String text) async {
   @override
   Widget build(BuildContext context) {
 
-void saveFavoriteVoiceNode(String node) async {
-  try {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: AlertDialog(
-            actions: [Center(child: CircularProgressIndicator())],
-            title: Center(child: Text("Saving..")),
-          ),
-        );
-      },
-    );
-    
-    String resp = await storeData().saveFavoriteVoiceNodes(nodes: node);
-    
-    Navigator.pop(context); // Close the saving dialog
-    
-    if (resp == "Success") {
-      // Optionally show a success message or perform any other action upon successful save
-      print("Node saved successfully!");
-    } else {
-      // Handle error case
-      print("Error occurred while saving node: $resp");
-    }
-  } catch (e) {
-    print("Error occurred: $e");
-    // Handle error case
-  }
-}
 
 
 
@@ -65,7 +35,7 @@ void saveFavoriteVoiceNode(String node) async {
         padding: EdgeInsets.only(bottom:10),
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
-    .collection('UsersVoiceNodes')
+    .collection('UsersFavoriteVoiceNodes')
     .where('userEmail', isEqualTo: userEmail)
    
     .snapshots(),
@@ -124,9 +94,9 @@ void saveFavoriteVoiceNode(String node) async {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    saveFavoriteVoiceNode(node);
+                                 
                                   },
-                                  icon: Icon(Icons.favorite_border_rounded),
+                                  icon: Icon(Icons.favorite,color: Colors.red,),
                                 ),
                                 IconButton(
                                   onPressed: () {

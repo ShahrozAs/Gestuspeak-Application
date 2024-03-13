@@ -18,6 +18,7 @@ class MoreNotesPage extends StatelessWidget {
         .get();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,11 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
+import 'package:gestuspeak/helper/checkpPost.dart';
+import 'package:gestuspeak/helper/showFavoriteNodes.dart';
+import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
-import 'package:gestuspeak/pages/more_notespage.dart';
 import 'package:gestuspeak/pages/note_page.dart';
 
 class FavoriteNotesPage extends StatelessWidget {
-  const FavoriteNotesPage({super.key});
+   FavoriteNotesPage({super.key});
+   final User? currentUser = FirebaseAuth.instance.currentUser!;
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+    return await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser!.email)
+        .get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,57 +46,43 @@ class FavoriteNotesPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.5,
       ),
-      drawer: MyDrawer(),
+      drawer:const MyDrawer(),
       body:  Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
+          child:  Column(
             children: [
-              Expanded(child: ListView.builder(itemBuilder: (context, index) {
-                return Card(
-                    elevation: 0.5,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: const Color(0xffF2F2F2)),
-                      width: double.infinity,
-                      // margin: EdgeInsets.only(left: 10, right: 10),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "This App is Under Developement",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 15),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.favorite,color: Colors.red,)),
-                                IconButton(onPressed: () {}, icon: Icon(Icons.speaker))
-                                    ,  IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_rounded))
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-              },itemCount: 15,),),
+              FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                  future: getUserDetails(),
+                  builder: (context, snapshot) {
+                    //during loading
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("Error :${snapshot.error}"),
+                      );
+                    } else if (snapshot.hasData) {
+                      Map<String, dynamic>? user = snapshot.data!.data();
+                      return ShowFavoriteNode(userEmail: user!['userEmail']);
+                       } else {
+                      return Center(
+                        child: Text("No Data Found"),
+                      );
+                    }
+                  }),
             ],
-          )        ),
+          )),
+                  
+                  
+      
          
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Color(0xffFFCB2D),
         unselectedItemColor: Color(0xff6B645D),
-
+        
         showSelectedLabels: true,
         showUnselectedLabels: true,
         items: const <BottomNavigationBarItem>[
