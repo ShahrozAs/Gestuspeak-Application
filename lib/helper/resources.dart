@@ -72,6 +72,28 @@ class storeData {
     return resp;
   }
 
+  Future<String> saveFavoriteVoiceNodes(
+      {required String nodes,
+    
+      }) async {
+    String resp = "Some Error Occured";
+    try {
+      if (nodes.isNotEmpty || nodes.isNotEmpty) {
+  
+        await _firestore.collection('UsersFavoriteVoiceNodes').add({
+          'nodes': nodes,
+          'userEmail': user.email!,
+        
+          'timestamp': Timestamp.now(),
+        });
+        resp = "Success";
+      }
+    } catch (e) {
+      resp = e.toString();
+    }
+    return resp;
+  }
+
 
 
 

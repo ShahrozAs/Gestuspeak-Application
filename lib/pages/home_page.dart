@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   bool isSelect = true;
-  String nodes="This is my house";
+  String nodes="This is my Laptop";
 
 
 

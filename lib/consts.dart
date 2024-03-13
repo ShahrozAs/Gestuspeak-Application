@@ -1,0 +1,1 @@
+String TTS_INPUT="In this first Law, an object will not change its motion unless a force acts on it";
