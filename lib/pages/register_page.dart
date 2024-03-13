@@ -57,6 +57,7 @@ if (userCredential!=null && userCredential.user!=null) {
   await FirebaseFirestore.instance.collection("Users").doc(userCredential.user!.email).set({'email':userCredential.user!.email,
   'username':userEditController.text,
   'uid':userCredential.user!.uid,
+  'userEmail':userCredential.user!.email,
   });
 }
 }

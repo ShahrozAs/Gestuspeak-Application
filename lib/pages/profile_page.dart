@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
+import 'package:gestuspeak/helper/checkpPost.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
 import 'package:gestuspeak/pages/note_page.dart';
@@ -106,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: CircleAvatar(
                                   radius: 90,
                                   foregroundImage: NetworkImage(
-                                      '${user?['imageLink']?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
+                                      '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
                                       //  "${user['imageLink']}"
                                       ),
                                 ),
@@ -114,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        user?['username']?? "username",
+                        user?['username'] ?? "username",
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -153,27 +154,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                 SizedBox(
                                   height: 25,
                                 ),
-                               Row(
-  mainAxisSize: MainAxisSize.max,
-  children: [
-    Text(
-      "Live in:", // Or format userDateOfBirth as desired
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    SizedBox(width: 25),
-    Expanded(
-      child: Text(
-        user?['live'] ?? "null",
-        softWrap: true,
-        // Other text styling properties can be added here
-      ),
-    ),
-  ],
-),
-
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Live in:", // Or format userDateOfBirth as desired
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(width: 25),
+                                    Expanded(
+                                      child: Text(
+                                        user?['live'] ?? "null",
+                                        softWrap: true,
+                                        // Other text styling properties can be added here
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 SizedBox(
                                   height: 25,
                                 ),
@@ -197,9 +197,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
+                               
+                              ShowPost(userEmail: user?['userEmail']??""),
+                          
                               ],
+                              
                             ),
+                            
                           ),
+                          
                         ),
                       ),
                     ],
@@ -211,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 }
               })),
 
-              bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Color(0xffFFCB2D),
         unselectedItemColor: Color(0xff6B645D),
@@ -238,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
           // Handle navigation on item tap
           switch (index) {
             case 0:
-                Navigator.push(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotePage(),
@@ -264,7 +270,6 @@ class _ProfilePageState extends State<ProfilePage> {
             case 3:
               // Navigator.pushNamed(context, videosScreenRoute);
               break;
-       
           }
         },
       ),

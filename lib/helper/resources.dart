@@ -37,7 +37,8 @@ class storeData {
           'username': username,
           'about': about,
           'live':live,
-          'imageLink': imageUrl
+          'imageLink': imageUrl,
+          'userEmail':user.email,
         });
         resp = "Success";
       }
