@@ -93,79 +93,88 @@ void saveVoiceNode() async {
       ),
       drawer: MyDrawer(),
       body: 
-       SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-         child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                  ),
-                  width: double.infinity,
-                  height: 300,
-                  child: Image.asset(
-                    'assets/images/hand.jpg',
-                    fit: BoxFit.contain,
-                    height: null,
-                    width: null,
-                    // height: 32,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  width: double.infinity,
-                   padding: const EdgeInsets.only(bottom:20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                  ),
-         
-                  child: Column(
-                    children: [
-                       Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
-                        width: double.infinity,
-                      
-                         margin: EdgeInsets.all(10),
-                         height: 250,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+       Center(
+         child: Container(     
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                 child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          width: double.infinity,
+                          height: 300,
+                          child: Image.asset(
+                            'assets/images/hand.jpg',
+                            fit: BoxFit.contain,
+                            height: null,
+                            width: null,
+                            // height: 32,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: double.infinity,
+                           padding: const EdgeInsets.only(bottom:20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                 
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Text(nodes??"You dont have text",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),))),
-                              Align(
-                              alignment: Alignment.bottomRight,
-                                child:  IconButton(
-                                  onPressed: () {
-                                      _speak(nodes);
-                                  },
-                                  icon: Icon(Icons.speaker),
-                                ),)
+                               Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
+                                width: double.infinity,
+                              
+                                 margin: EdgeInsets.all(10),
+                                 height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(child: SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Text(nodes??"You dont have text",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),))),
+                                      Align(
+                                      alignment: Alignment.bottomRight,
+                                        child:  IconButton(
+                                          onPressed: () {
+                                              _speak(nodes);
+                                          },
+                                          icon: Icon(Icons.speaker),
+                                        ),)
+                                    ],
+                                  ),
+                                ) ,
+                               ),
+                              
+                            
+                                  ElevatedButton(onPressed: (){
+                                     saveVoiceNode();
+               
+                                  }, child:Text("Add note"),style: ElevatedButton.styleFrom(
+                                    foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
+                                  ),)
                             ],
                           ),
-                        ) ,
-                       ),
-                      
-                    
-                          ElevatedButton(onPressed: (){
-                             saveVoiceNode();
-
-                          }, child:Text("Add note"),style: ElevatedButton.styleFrom(
-                            foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
-                          ),)
-                    ],
-                  ),
-                  
-                )
-              ]),
-            ),
+                          
+                        )
+                      ]),
+                    ),
+               ),
+             ],
+           ),
+         ),
        ),
       
       
@@ -229,3 +238,8 @@ void saveVoiceNode() async {
     );
   }
 }
+
+
+
+
+

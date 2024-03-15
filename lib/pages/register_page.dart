@@ -66,57 +66,61 @@ if (userCredential!=null && userCredential.user!=null) {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
-       body: SingleChildScrollView(
-         child: Center(
-           
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/logo3r.png',width: 130,height: 130,),
-                SizedBox(height: 25,),
-                Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge),
-                SizedBox(height: 50,),
-                MyTextField(hint: "john doe", label: "Username", obscureText: false, controller:userEditController ),
-                SizedBox(height: 10,),
-                MyTextField(hint: "john@gmail.com", label: "Email", obscureText: false, controller:emailEditController ),
-                SizedBox(height: 10,),
-                MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
-                SizedBox(height: 10,),
-                MyTextField(hint: "Password", label: "Confirm Password", obscureText: true, controller:confirmPasswordEditController ),
-                SizedBox(height: 10,),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),),
-                //   ],
-                // ),
-         
-                SizedBox(height: 25,),
-         
-                MyButton(text: "Register", onTap: register),
-                SizedBox(height: 25,),
-         
-                Row(
+       body: Center(
+         child: Container(
+           child: SingleChildScrollView(
+             child: Center(
+               
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account?"),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: Text(" Login Here",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),),
+                    Image.asset('assets/images/logo3r.png',width: 130,height: 130,),
+                    SizedBox(height: 25,),
+                    Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge),
+                    SizedBox(height: 50,),
+                    MyTextField(hint: "john doe", label: "Username", obscureText: false, controller:userEditController ),
+                    SizedBox(height: 10,),
+                    MyTextField(hint: "john@gmail.com", label: "Email", obscureText: false, controller:emailEditController ),
+                    SizedBox(height: 10,),
+                    MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
+                    SizedBox(height: 10,),
+                    MyTextField(hint: "Password", label: "Confirm Password", obscureText: true, controller:confirmPasswordEditController ),
+                    SizedBox(height: 10,),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //   children: [
+                    //     Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),),
+                    //   ],
+                    // ),
+             
+                    SizedBox(height: 25,),
+             
+                    MyButton(text: "Register", onTap: register),
+                    SizedBox(height: 25,),
+             
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account?"),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: Text(" Login Here",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),),
+                        )
+                      ],
                     )
-                  ],
-                )
+                    
                 
-            
-              ],
-            ),
-          ),
+                  ],
+                ),
+              ),
+             ),
+           ),
          ),
        ),
     );
