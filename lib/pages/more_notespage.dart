@@ -30,18 +30,7 @@ class MoreNotesPage extends StatelessWidget {
                 Icons.toggle_on,
                 color: Color(0xffFFCB2D),
               )),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: CircleAvatar(
-                backgroundColor: Color(0xffF2F2F2),
-                radius: 20,
-                child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.logout,
-                      color: Color(0xffFFCB2D),
-                    ))),
-          ),
+      
         ],
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -65,7 +54,7 @@ class MoreNotesPage extends StatelessWidget {
                       );
                     } else if (snapshot.hasData) {
                       Map<String, dynamic>? user = snapshot.data!.data();
-                      return ShowPost(userEmail: user!['userEmail']);
+                      return ShowPost(userEmail: user?['userEmail']??"");
                        } else {
                       return Center(
                         child: Text("No Data Found"),

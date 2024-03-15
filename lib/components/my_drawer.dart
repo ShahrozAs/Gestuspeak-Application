@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/pages/edit_profilePage.dart';
 import 'package:gestuspeak/pages/profile_page.dart';
@@ -60,6 +61,8 @@ class MyDrawer extends StatelessWidget {
                     title: Text("L O G O U T"),
                     onTap: () {
                       Navigator.pop(context);
+                
+                      FirebaseAuth.instance.signOut();
                     },
                   ),
                 ),

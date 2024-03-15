@@ -46,6 +46,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 
      Navigator.pop(context);
+
+     Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
   }
 
   Uint8List? _image;
@@ -63,6 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Edit Profile'),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
