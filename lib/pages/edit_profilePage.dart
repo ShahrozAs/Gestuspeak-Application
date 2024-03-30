@@ -19,6 +19,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+
   // Variables to store profile data from state management
   String profileImagePath = "";
   String username = "";
