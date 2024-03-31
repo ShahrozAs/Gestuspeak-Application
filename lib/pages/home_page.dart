@@ -341,8 +341,15 @@
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:gestuspeak/components/my_drawer.dart';
+import 'package:gestuspeak/helper/helper_functions.dart';
+import 'package:gestuspeak/helper/resources.dart';
+import 'package:gestuspeak/pages/favorite_page.dart';
+import 'package:gestuspeak/pages/note_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
@@ -353,7 +360,46 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   BluetoothConnection? connection;
   bool get isConnected => connection != null && connection!.isConnected;
-  String receivedData = "You don't have text";
+  String receivedData = "";
+  final FlutterTts flutterTts = FlutterTts();
+  Future<void> _speak(String text) async {
+  await flutterTts.setVolume(1.0);
+  await flutterTts.setSpeechRate(0.5);
+  await flutterTts.setPitch(1.0);
+  await flutterTts.setLanguage("en-US");
+  await flutterTts.speak(text);
+}
+
+void saveVoiceNode() async {
+  try {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: AlertDialog(
+            actions: [Center(child: CircularProgressIndicator())],
+            title: Center(child: Text("Saving..")),
+          ),
+        );
+      },
+    );
+    
+    String resp = await storeData().saveVoiceNodes(nodes: receivedData);
+    
+    Navigator.pop(context); // Close the saving dialog
+    
+    if (resp == "Success") {
+      // Optionally show a success message or perform any other action upon successful save
+      print("Node saved successfully!");
+    } else {
+      // Handle error case
+      print("Error occurred while saving node: $resp");
+    }
+  } catch (e) {
+    print("Error occurred: $e");
+    // Handle error case
+  }
+}
 
   @override
   void initState() {
@@ -369,24 +415,23 @@ class _HomePageState extends State<HomePage> {
       // You may display a message or request permission again
     }
   }
-Future<void> _connectBluetooth() async {
-  List<BluetoothDevice> devices = [];
-  devices = await FlutterBluetoothSerial.instance.getBondedDevices();
-  BluetoothDevice? hc05;
-  try {
-    hc05 = devices.firstWhere((device) => device.name == 'HC-05');
-  } catch (e) {
-    print('HC-05 not found among bonded devices');
-  }
-  if (hc05 != null) {
-    await _connectToDevice(hc05);
-  } else {
-    // HC-05 not paired, prompt user to pair through Bluetooth settings
-    FlutterBluetoothSerial.instance.openSettings();
-  }
-}
 
-
+  Future<void> _connectBluetooth() async {
+    List<BluetoothDevice> devices = [];
+    devices = await FlutterBluetoothSerial.instance.getBondedDevices();
+    BluetoothDevice? hc05;
+    try {
+      hc05 = devices.firstWhere((device) => device.name == 'HC-05');
+    } catch (e) {
+      print('HC-05 not found among bonded devices');
+    }
+    if (hc05 != null) {
+      await _connectToDevice(hc05);
+    } else {
+      // HC-05 not paired, prompt user to pair through Bluetooth settings
+      FlutterBluetoothSerial.instance.openSettings();
+    }
+  }
 
   Future<void> _connectToDevice(BluetoothDevice device) async {
     await BluetoothConnection.toAddress(device.address).then((conn) {
@@ -408,29 +453,182 @@ Future<void> _connectBluetooth() async {
 
   void _onDataReceived(Uint8List data) {
     setState(() {
-      receivedData = String.fromCharCodes(data);
+      receivedData += String.fromCharCodes(data);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
-        title: Text('Bluetooth Communication'),
+        actions: [
+
+           IconButton(onPressed: (){},icon: Icon(Icons.toggle_on,color: Color(0xffFFCB2D),)),
+           Padding(
+             padding: const EdgeInsets.only(right:10.0),
+             child: CircleAvatar(backgroundColor: Color(0xffF2F2F2),radius: 20,child: IconButton(onPressed: (){
+              FirebaseAuth.instance.signOut();
+             },icon: Icon(Icons.logout,color: Color(0xffFFCB2D),))),
+           ),
+        ],
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
+      drawer: MyDrawer(),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Received Data:',
-            ),
-            Text(
-              receivedData,
-              style: TextStyle(fontSize: 24.0),
-            ),
+            if (!isConnected && receivedData.isEmpty)
+              Text('You don\'t have text'),
+            if (isConnected && receivedData.isNotEmpty)
+              Text(
+                'Received Data:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+            SizedBox(height: 10),
+            if (receivedData.isNotEmpty)
+             Center(
+         child: Container(     
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                 child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          width: double.infinity,
+                          height: 300,
+                          child: Image.asset(
+                            'assets/images/hand.jpg',
+                            fit: BoxFit.contain,
+                            height: null,
+                            width: null,
+                            // height: 32,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: double.infinity,
+                           padding: const EdgeInsets.only(bottom:20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                 
+                          child: Column(
+                            children: [
+                               Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
+                                width: double.infinity,
+                              
+                                 margin: EdgeInsets.all(10),
+                                 height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(child: SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Text(receivedData??"You dont have text",style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 23),))),
+                                      Align(
+                                      alignment: Alignment.bottomRight,
+                                        child:  IconButton(
+                                          onPressed: () {
+                                              _speak(receivedData);
+                                          },
+                                          icon: Icon(Icons.speaker),
+                                        ),)
+                                    ],
+                                  ),
+                                ) ,
+                               ),
+                              
+                            
+                                  ElevatedButton(onPressed: (){
+                                     saveVoiceNode();
+               
+                                  }, child:Text("Add note"),style: ElevatedButton.styleFrom(
+                                    foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
+                                  ),)
+                            ],
+                          ),
+                          
+                        )
+                      ]),
+                    ),
+               ),
+             ],
+           ),
+         ),
+       ),
+      
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: Color(0xffFFCB2D),
+        unselectedItemColor: Color(0xff6B645D),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pending_actions_outlined),
+            label: 'Notes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_outline_rounded),
+            label: 'favourite',
+          ),
+        ],
+        currentIndex: 1, // Set the initial index to Home
+        onTap: (index) {
+          // Handle navigation on item tap
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotePage(),
+                ),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FavoriteNotesPage(),
+                ),
+              );
+              break;
+            case 3:
+              break;
+          }
+        },
       ),
     );
   }
@@ -441,8 +639,3 @@ Future<void> _connectBluetooth() async {
     connection?.dispose();
   }
 }
-
-
-
-
-
