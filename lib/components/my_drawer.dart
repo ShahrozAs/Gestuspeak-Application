@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/pages/edit_profilePage.dart';
 import 'package:gestuspeak/pages/profile_page.dart';
+import 'package:gestuspeak/pages/user_guide.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -38,7 +39,6 @@ class MyDrawer extends StatelessWidget {
                     title: Text("E D I T  P R O F I L E"),
                     onTap: () {
                       Navigator.pop(context);
-                       Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
                     },
                   ),
@@ -46,9 +46,10 @@ class MyDrawer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(
-                    title: Text("A B O U T"),
+                    title: Text("U S E R  G U I D E"),
                     onTap: () {
                       Navigator.pop(context);
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
                     },
                   ),
                 ),
