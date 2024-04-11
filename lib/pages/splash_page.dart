@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gestuspeak/auth/auth.dart';
+import 'package:gestuspeak/pages/user_guide.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
 
     super.initState();
-    Timer(const Duration(seconds: 3), () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const AuthPage(),));});
+    Timer(const Duration(seconds: 3), () { Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const UserGuidePage(),));});
   }
 
   @override
