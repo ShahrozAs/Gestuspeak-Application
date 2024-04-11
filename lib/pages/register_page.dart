@@ -39,7 +39,7 @@ void register()async{
  //
 
  try {
-   UserCredential? userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailEditController.text, password: passwordEditController.text);
+   UserCredential? userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailEditController.text.trim(), password: passwordEditController.text.trim());
 
    createUserDocument(userCredential);
    Navigator.pop(context);

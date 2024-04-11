@@ -127,22 +127,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 initialValue: name,
                 decoration: InputDecoration(labelText: 'Name'),
-                onChanged: (value) => setState(() => name = value),
+                onChanged: (value) => setState(() => name = value.trim()),
               ),
               TextFormField(
                 initialValue: username,
                 decoration: InputDecoration(labelText: 'Username'),
-                onChanged: (value) => setState(() => username = value),
+                onChanged: (value) => setState(() => username = value.trim()),
               ),
               TextFormField(
                 initialValue: live,
                 decoration: InputDecoration(labelText: 'live in'),
-                onChanged: (value) => setState(() => live = value),
+                onChanged: (value) => setState(() => live = value.trim()),
               ),
               TextFormField(
                 initialValue: about,
                 decoration: InputDecoration(labelText: 'About'),
-                onChanged: (value) => setState(() => about = value),
+                onChanged: (value) => setState(() => about = value.trim()),
                 maxLines: 5, // Allow multiple lines for about
               ),
           

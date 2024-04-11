@@ -29,7 +29,7 @@ TextEditingController passwordEditController=TextEditingController();
  //
 
  try {
- await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailEditController.text, password: passwordEditController.text);
+ await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailEditController.text.trim(), password: passwordEditController.text.trim());
 
    if (context.mounted) Navigator.pop(context);
  } on FirebaseAuthException catch (e) {
