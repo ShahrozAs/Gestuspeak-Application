@@ -338,7 +338,7 @@ class _NotePageState extends State<NotePage> {
           // Handle navigation on item tap
           switch (index) {
             case 0:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotePage(),
@@ -346,7 +346,7 @@ class _NotePageState extends State<NotePage> {
               // Navigator.pushNamed(context, homeScreenRoute);
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(),
@@ -354,7 +354,7 @@ class _NotePageState extends State<NotePage> {
               // Navigator.pushNamed(context, searchScreenRoute);
               break;
             case 2:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FavoriteNotesPage(),

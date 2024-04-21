@@ -94,7 +94,7 @@ class FavoriteNotesPage extends StatelessWidget {
           // Handle navigation on item tap
           switch (index) {
             case 0:
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotePage(),
@@ -102,7 +102,7 @@ class FavoriteNotesPage extends StatelessWidget {
               // Navigator.pushNamed(context, homeScreenRoute);
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(),
@@ -110,7 +110,7 @@ class FavoriteNotesPage extends StatelessWidget {
               // Navigator.pushNamed(context, searchScreenRoute);
               break;
             case 2:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FavoriteNotesPage(),

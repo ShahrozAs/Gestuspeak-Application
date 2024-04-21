@@ -232,7 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
           // Handle navigation on item tap
           switch (index) {
             case 0:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotePage(),
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
               // Navigator.pushNamed(context, homeScreenRoute);
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(),
@@ -248,7 +248,7 @@ class _ProfilePageState extends State<ProfilePage> {
               // Navigator.pushNamed(context, searchScreenRoute);
               break;
             case 2:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FavoriteNotesPage(),

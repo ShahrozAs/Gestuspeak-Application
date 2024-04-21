@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:gestuspeak/components/my_drawer.dart';
 import 'package:gestuspeak/helper/alphabet_images.dart';
 
 class UserGuidePage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _UserGuidePageState extends State<UserGuidePage> {
       appBar: AppBar(
         title: Text("User Guide"),
       ),
+      drawer: MyDrawer(),
       body:ListView.builder(itemBuilder: (context, index) {
       
         return Container(

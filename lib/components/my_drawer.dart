@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
                     title: Text("P E R S O N A L  I N F O"),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
                     },
                   ),
                 ),
@@ -39,7 +39,7 @@ class MyDrawer extends StatelessWidget {
                     title: Text("E D I T  P R O F I L E"),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
                     },
                   ),
                 ),
@@ -49,7 +49,7 @@ class MyDrawer extends StatelessWidget {
                     title: Text("U S E R  G U I D E"),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
+                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
                     },
                   ),
                 ),
@@ -61,7 +61,6 @@ class MyDrawer extends StatelessWidget {
                   child: ListTile(
                     title: Text("L O G O U T"),
                     onTap: () {
-                      Navigator.pop(context);
                 
                       FirebaseAuth.instance.signOut();
                     },
