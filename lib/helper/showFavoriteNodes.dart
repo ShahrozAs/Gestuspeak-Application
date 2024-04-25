@@ -35,7 +35,7 @@ Future<void> _speak(String text) async {
         padding: EdgeInsets.only(bottom:10),
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
-    .collection('UsersFavoriteVoiceNodes')
+    .collection('UsersVoiceNodes')
     .where('userEmail', isEqualTo: userEmail)
    
     .snapshots(),
@@ -53,74 +53,93 @@ Future<void> _speak(String text) async {
             if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
               return _buildErrorMessage("No data found");
             }
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot nodes = snapshot.data!.docs[index];
-                Map<String, dynamic> nodeData =
-                    nodes.data() as Map<String, dynamic>;
-              String    node = nodeData['nodes'] ?? '';
-                // print("$node");
+           return ListView.builder(
+  itemCount: snapshot.data!.docs.length * 2 - 1, // Double the count to account for possible placeholders
+  itemBuilder: (BuildContext context, int index) {
+    if (index.isOdd) {
+      // Odd indices represent non-favorite placeholders
+      return Container(); // Adjust the height as needed
+    } else {
+      // Even indices represent actual favorite nodes
+      int favIndex = index ~/ 2; // Calculate the index of favorite node
+      DocumentSnapshot nodes = snapshot.data!.docs[favIndex];
+      Map<String, dynamic> nodeData = nodes.data() as Map<String, dynamic>;
+      bool isFavorite = nodeData['isFavorite'] ?? false;
+      String node = nodeData['nodes'] ?? '';
 
-                return GestureDetector(
-                  onTap: () {
-                    // Handle post click
-                  },
-                  child: Card(
-                   
-                    elevation: 0.5,
-                    child: Container(
-                      height: 85,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: const Color(0xffF2F2F2),
+      if (isFavorite) {
+        return GestureDetector(
+          onTap: () {
+            // Handle post click
+          },
+          child: Card(
+            elevation: 0.5,
+            child: Container(
+              height: 85,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xffF2F2F2),
+              ),
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 10.0,
+                  right: 10.0,
+                  top: 10,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        node,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(fontSize: 15),
                       ),
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                node,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontSize: 15),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                   
-                                    },
-                                    icon: Icon(Icons.favorite,color: Colors.red,),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                        _speak(node);
-                                    },
-                                    icon: Icon(Icons.speaker),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.more_vert_rounded),
-                                  ),
-                                ],
-                              )
-                            ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              // Handle favorite button tap
+                            },
+                            icon: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+                          IconButton(
+                            onPressed: () {
+                              _speak(node);
+                            },
+                            icon: Icon(Icons.speaker),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              // Handle more options button tap
+                            },
+                            icon: Icon(Icons.more_vert_rounded),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                );
-              },
-            );
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        // Placeholder for non-favorite nodes
+        return Container(); // Adjust the height as needed
+      }
+    }
+  },
+);
+
           },
         ),
       ),
@@ -136,4 +155,3 @@ Future<void> _speak(String text) async {
     );
   }
 }
-
