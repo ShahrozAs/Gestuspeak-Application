@@ -29,16 +29,17 @@ class storeData {
     String resp = "Some Error Occured";
     try {
       if (name.isNotEmpty || about.isNotEmpty) {
-            final id1 = Timestamp.now();
-        String imageUrl = await uploadImageToStorage('${id1}+profileImage', file);
-     
+        final id1 = Timestamp.now();
+        String imageUrl =
+            await uploadImageToStorage('${id1}+profileImage', file);
+
         await _firestore.collection('Users').doc(user.email!).set({
           'name': name,
           'username': username,
           'about': about,
-          'live':live,
+          'live': live,
           'imageLink': imageUrl,
-          'userEmail':user.email,
+          'userEmail': user.email,
         });
         resp = "Success";
       }
@@ -48,23 +49,27 @@ class storeData {
     return resp;
   }
 
-  
-
-  Future<String> saveVoiceNodes(
-      {required String nodes,
-    
-      }) async {
+  Future<String> saveVoiceNodes({
+    required String nodes,
+    // bool isFavorite=false,
+  }) async {
     String resp = "Some Error Occured";
     try {
       if (nodes.isNotEmpty || nodes.isNotEmpty) {
-  
-        await _firestore.collection('UsersVoiceNodes').add({
+        DocumentReference docRef =
+            await _firestore.collection('UsersVoiceNodes').add({
           'nodes': nodes,
           'userEmail': user.email!,
-        
           'timestamp': Timestamp.now(),
+          'isFavorite':false
         });
-        resp = "Success";
+        String key = docRef.id;
+
+        // Update the document with the auto-generated key
+        await docRef.update({'key': key});
+
+        // await docRef.update({'isFavorite':isFavorite});
+         resp = "Success";
       }
     } catch (e) {
       resp = e.toString();
@@ -72,34 +77,61 @@ class storeData {
     return resp;
   }
 
-  Future<String> saveFavoriteVoiceNodes(
-      {required String nodes,
-    
-      }) async {
-    String resp = "Some Error Occured";
-    try {
-      if (nodes.isNotEmpty || nodes.isNotEmpty) {
-  
-        await _firestore.collection('UsersFavoriteVoiceNodes').add({
-          'nodes': nodes,
-          'userEmail': user.email!,
-        
-          'timestamp': Timestamp.now(),
-        });
-        resp = "Success";
-      }
-    } catch (e) {
-      resp = e.toString();
-    }
-    return resp;
+  Future<String> updateSaveVoiceNodes(String nodeId, bool isFavorite) async {
+
+  String resp = "Some Error Occured";
+  try {
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$nodeId");
+    // Get the reference to the document to be updated
+    DocumentReference docRef =
+        _firestore.collection('UsersVoiceNodes').doc(nodeId);
+
+    // Update the isFavorite field of the document
+    await docRef.update({'isFavorite': isFavorite});
+
+    resp = "Success";
+  } catch (e) {
+    resp = e.toString();
   }
-
-
-
-
-
-  
-
+  return resp;
 }
 
 
+  Future<String> saveFavoriteVoiceNodes({
+    required String nodes,
+    required bool isFavorite,
+  }) async {
+    String resp = "Some Error Occurred";
+    try {
+      if (nodes.isNotEmpty) {
+        // Check if the document already exists
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('UsersFavoriteVoiceNodes')
+            .where('nodes', isEqualTo: nodes)
+            .where('userEmail', isEqualTo: user.email!)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // Toggle the isFavorite value
+          bool isFavorite = querySnapshot.docs.first.get('isFavorite');
+          await querySnapshot.docs.first.reference.update({
+            'isFavorite': !isFavorite,
+            'timestamp': Timestamp.now(),
+          });
+        } else {
+          // Create a new document
+          await _firestore.collection('UsersFavoriteVoiceNodes').add({
+            'nodes': nodes,
+            'userEmail': user.email!,
+            'isFavorite': true, // Set initial value to true
+            'timestamp': Timestamp.now(),
+          });
+        }
+        resp = "Success";
+      }
+    } catch (e) {
+      resp = e.toString();
+    }
+    return resp;
+  }
+}

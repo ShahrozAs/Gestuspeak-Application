@@ -870,7 +870,7 @@ if (receivedData.isNotEmpty) {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
+                                  color: Color.fromRGBO(33, 32, 33, 1),
                                 ),
                                 width: double.infinity,
                                 height: 300,

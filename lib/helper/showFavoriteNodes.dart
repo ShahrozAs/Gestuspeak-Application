@@ -79,38 +79,41 @@ Future<void> _speak(String text) async {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10.0, right: 10.0, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              node,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 15),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                 
-                                  },
-                                  icon: Icon(Icons.favorite,color: Colors.red,),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                      _speak(node);
-                                  },
-                                  icon: Icon(Icons.speaker),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.more_vert_rounded),
-                                ),
-                              ],
-                            )
-                          ],
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                node,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontSize: 15),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                   
+                                    },
+                                    icon: Icon(Icons.favorite,color: Colors.red,),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                        _speak(node);
+                                    },
+                                    icon: Icon(Icons.speaker),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.more_vert_rounded),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
