@@ -49,33 +49,72 @@ class storeData {
     return resp;
   }
 
-  Future<String> saveVoiceNodes({
-    required String nodes,
-    // bool isFavorite=false,
-  }) async {
-    String resp = "Some Error Occured";
-    try {
-      if (nodes.isNotEmpty || nodes.isNotEmpty) {
-        DocumentReference docRef =
-            await _firestore.collection('UsersVoiceNodes').add({
-          'nodes': nodes,
-          'userEmail': user.email!,
-          'timestamp': Timestamp.now(),
-          'isFavorite':false
-        });
-        String key = docRef.id;
+  // Future<String> saveVoiceNodes({
+  //   required String nodes,
+  //   // bool isFavorite=false,
+  // }) async {
+  //   String resp = "Some Error Occured";
+  //   try {
+  //     if (nodes.isNotEmpty || nodes.isNotEmpty) {
+  //       DocumentReference docRef =
+  //           await _firestore.collection('UsersVoiceNodes').add({
+  //         'nodes': nodes,
+  //         'userEmail': user.email!,
+  //         'timestamp': Timestamp.now(),
+  //         'isFavorite':false
+  //       });
+  //       String key = docRef.id;
 
-        // Update the document with the auto-generated key
-        await docRef.update({'key': key});
+  //       // Update the document with the auto-generated key
+  //       await docRef.update({'key': key});
 
-        // await docRef.update({'isFavorite':isFavorite});
-         resp = "Success";
-      }
-    } catch (e) {
-      resp = e.toString();
+  //       // await docRef.update({'isFavorite':isFavorite});
+  //        resp = "Success";
+  //     }
+  //   } catch (e) {
+  //     resp = e.toString();
+  //   }
+  //   return resp;
+  // }
+
+Future<String> saveVoiceNodes({
+  required String nodes,
+}) async {
+  String resp = "Some Error Occurred";
+  try {
+    if (nodes.isNotEmpty) {
+      List<String> substrings = generateSubstrings(nodes); // Generate substrings
+      DocumentReference docRef =
+          await _firestore.collection('UsersVoiceNodes').add({
+        'nodes': nodes,
+        'nodes_substrings': substrings, // Store substrings
+        'userEmail': user.email!,
+        'timestamp': Timestamp.now(),
+        'isFavorite': false
+      });
+      String key = docRef.id;
+
+      // Update the document with the auto-generated key
+      await docRef.update({'key': key});
+
+      resp = "Success";
     }
-    return resp;
+  } catch (e) {
+    resp = e.toString();
   }
+  return resp;
+}
+
+// Function to generate substrings
+List<String> generateSubstrings(String text) {
+  List<String> substrings = [];
+  for (int i = 0; i < text.length; i++) {
+    for (int j = i + 1; j <= text.length; j++) {
+      substrings.add(text.substring(i, j));
+    }
+  }
+  return substrings;
+}
 
   Future<String> updateSaveVoiceNodes(String nodeId, bool isFavorite) async {
 

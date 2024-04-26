@@ -13,16 +13,18 @@ class SearchNode extends StatefulWidget {
 class _SearchNodeState extends State<SearchNode> {
   List searchResult = [];
 
-  void searchFromFirebase(String query) async {
-    final result = await FirebaseFirestore.instance
-        .collection('UsersVoiceNodes')
-        .where('nodes', isEqualTo: query)
-        .get();
+void searchFromFirebase(String query) async {
+  final result = await FirebaseFirestore.instance
+      .collection('UsersVoiceNodes')
+      .where('nodes_substrings', arrayContains: query)
+      .get();
 
-    setState(() {
-      searchResult = result.docs.map((e) => e.data()).toList();
-    });
-  }
+  setState(() {
+    searchResult = result.docs.map((e) => e.data()).toList();
+  });
+}
+
+
   final FlutterTts flutterTts = FlutterTts();
 
   Future<void> _speak(String text) async {

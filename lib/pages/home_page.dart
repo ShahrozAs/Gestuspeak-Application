@@ -932,6 +932,9 @@ if (receivedData.isNotEmpty) {
                                     ElevatedButton(
                                       onPressed: () {
                                         saveVoiceNode();
+                                        setState(() {
+                                          receivedData="";
+                                        });
                                       },
                                       child: Text("Add note"),
                                       style: ElevatedButton.styleFrom(
