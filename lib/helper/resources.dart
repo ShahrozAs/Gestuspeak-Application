@@ -81,7 +81,7 @@ class storeData {
 
   String resp = "Some Error Occured";
   try {
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$nodeId");
+    // print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$isFavorite");
     // Get the reference to the document to be updated
     DocumentReference docRef =
         _firestore.collection('UsersVoiceNodes').doc(nodeId);

@@ -321,30 +321,31 @@ class _ShowPostState extends State<ShowPost> {
     void saveFavoriteVoiceNode(
         String node, bool isFavorite, String docId) async {
       try {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const Center(
-              child: AlertDialog(
-                actions: [Center(child: CircularProgressIndicator())],
-                title: Center(child: Text("Saving..")),
-              ),
-            );
-          },
-        );
+        // showDialog(
+        //   context: context,
+        //   builder: (context) {
+        //     return const Center(
+        //       child: AlertDialog(
+        //         actions: [Center(child: CircularProgressIndicator())],
+        //         title: Center(child: Text("Saving..")),
+        //       ),
+        //     );
+        //   },
+        // );
 
-        String resp = await storeData().saveFavoriteVoiceNodes(
-          nodes: node,
-          isFavorite: isFavorite,
-        );
+        // String resp = await storeData().saveFavoriteVoiceNodes(
+        //   nodes: node,
+        //   isFavorite: isFavorite,
+        // );
         String resp1 = await storeData().updateSaveVoiceNodes(
           docId,
           isFavorite,
+
         );
 
-        Navigator.pop(context); // Close the saving dialog
+        // Navigator.pop(context); // Close the saving dialog
 
-        if (resp == "Success") {
+        if (resp1 == "Success") {
           // // Fetch the updated isFavorite value from Firestore
           // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           //     .collection('UsersFavoriteVoiceNodes')
@@ -364,7 +365,7 @@ class _ShowPostState extends State<ShowPost> {
           // });
         } else {
           // Handle error case
-          print("Error occurred while saving node: $resp");
+          print("Error occurred while saving node: $resp1");
         }
       } catch (e) {
         print("Error occurred: $e");
@@ -420,8 +421,8 @@ class _ShowPostState extends State<ShowPost> {
                 String node = nodeData['nodes'] ?? '';
                 String docId = nodeData['key'] ?? '';
                 bool isFavorite = nodeData['isFavorite'] ?? false;
-                print(
-                    "=====================================================================$docId");
+                // print(
+                    // "=====================================================================$docId");
 
                 return GestureDetector(
                   onTap: () {

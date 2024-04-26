@@ -3,11 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:gestuspeak/helper/resources.dart';
 
-class SearchNode extends StatelessWidget {
-  final String searchText;
+class SearchNode extends StatefulWidget {
+  const SearchNode({super.key});
 
-  SearchNode({Key? key, required this.searchText}) : super(key: key);
+  @override
+  State<SearchNode> createState() => _SearchNodeState();
+}
 
+class _SearchNodeState extends State<SearchNode> {
+  List searchResult = [];
+
+  void searchFromFirebase(String query) async {
+    final result = await FirebaseFirestore.instance
+        .collection('UsersVoiceNodes')
+        .where('nodes', isEqualTo: query)
+        .get();
+
+    setState(() {
+      searchResult = result.docs.map((e) => e.data()).toList();
+    });
+  }
   final FlutterTts flutterTts = FlutterTts();
 
   Future<void> _speak(String text) async {
@@ -18,39 +33,38 @@ class SearchNode extends StatelessWidget {
     await flutterTts.speak(text);
   }
 
+
+    
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 10),
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('UsersVoiceNodes')
-              .where('nodes', isEqualTo: searchText)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              print("Error: ${snapshot.error}");
-              return _buildErrorMessage("Something went wrong");
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
-              return _buildErrorMessage("No data found");
-            }
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot nodes = snapshot.data!.docs[index];
-                Map<String, dynamic> nodeData =
-                    nodes.data() as Map<String, dynamic>;
-                String node = nodeData['nodes'] ?? '';
-                // print("$node");
-
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(top: 45, left: 20, right: 20, bottom: 20),
+        child: Column(
+          children: [
+            Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              child: TextField(
+                  onChanged: (query) {
+                    searchFromFirebase(query);
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () {},
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    hintText: "Search Here",
+                    labelText: "Search",
+                  )),
+            ),
+            Expanded(
+                child: ListView.builder(
+              itemCount: searchResult.length,
+              itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
                     // Handle post click
@@ -66,55 +80,45 @@ class SearchNode extends StatelessWidget {
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              node,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 15),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.favorite_border_rounded),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    _speak(node);
-                                  },
-                                  icon: Icon(Icons.speaker),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.more_vert_rounded),
-                                ),
-                              ],
-                            )
-                          ],
+                          left: 10.0,
+                          right: 10.0,
+                          top: 10,
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                searchResult[index]['nodes'],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontSize: 15),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                              
+                                  IconButton(
+                                    onPressed: () {
+                                      _speak(searchResult[index]['nodes']);
+                                    },
+                                    icon: Icon(Icons.speaker),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 );
               },
-            );
-          },
+            )),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildErrorMessage(String message) {
-    return Center(
-      child: Text(
-        message,
-        style: TextStyle(fontSize: 18.0),
       ),
     );
   }

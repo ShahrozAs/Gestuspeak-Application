@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gestuspeak/components/my_bottomNavigation.dart';
 import 'package:gestuspeak/components/my_drawer.dart';
 import 'package:gestuspeak/helper/checkpPost.dart';
+import 'package:gestuspeak/helper/searchNode.dart';
 import 'package:gestuspeak/helper/showOneNodeOnly.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
@@ -22,9 +23,6 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   final User? currentUser = FirebaseAuth.instance.currentUser!;
-  final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
-  String? matchText;
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
     return await FirebaseFirestore.instance
@@ -44,55 +42,7 @@ class _NotePageState extends State<NotePage> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
-  }
-
-  void _fetchDataFromFirestore(String searchQuery) async {
-    try {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
-
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await FirebaseFirestore.instance
-              .collection('UsersVoiceNodes')
-              .where('userEmail', isEqualTo: currentUser!.email)
-              .where('nodes', isEqualTo: searchQuery)
-              .get();
-
-      Navigator.pop(context); // Close the loading dialog
-
-      if (querySnapshot.docs.isEmpty) {
-        // Handle case where no matching data is found
-        print('No matching data found');
-      } else {
-        // Handle case where matching data is found
-        List<DocumentSnapshot> matchingDocuments = querySnapshot.docs;
-        // Process the matching documents further as needed
-        List<String> matchedNodesText = [];
-
-        for (DocumentSnapshot<Map<String, dynamic>> doc in matchingDocuments
-            as Iterable<DocumentSnapshot<Map<String, dynamic>>>) {
-          String nodeText = doc['nodes'] as String;
-          matchedNodesText.add(nodeText);
-        }
-        for (var i = 0; i < matchedNodesText.length; i++) {
-          print(matchedNodesText[i]);
-          matchText=matchedNodesText[i];
-        }
-
-        // print("Matched=================================$matchingDocuments");
-      }
-    } catch (e) {
-      print("Error occurred: $e");
-      // Handle error case
-    }
   }
 
   @override
@@ -108,7 +58,6 @@ class _NotePageState extends State<NotePage> {
                 Icons.toggle_on,
                 color: Color(0xffFFCB2D),
               )),
-       
         ],
         backgroundColor: Colors.white,
         elevation: 0,
@@ -125,7 +74,8 @@ class _NotePageState extends State<NotePage> {
                       future: getUserDetails(),
                       builder: (context, snapshot) {
                         //during loading
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -148,8 +98,10 @@ class _NotePageState extends State<NotePage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -160,17 +112,20 @@ class _NotePageState extends State<NotePage> {
                                               child: _image != null
                                                   ? Padding(
                                                       padding:
-                                                          const EdgeInsets.all(10.0),
+                                                          const EdgeInsets.all(
+                                                              10.0),
                                                       child: CircleAvatar(
                                                         radius: 60,
-                                                        backgroundImage: MemoryImage(
+                                                        backgroundImage:
+                                                            MemoryImage(
                                                           (_image!),
                                                         ),
                                                       ),
                                                     )
                                                   : Padding(
                                                       padding:
-                                                          const EdgeInsets.all(10.0),
+                                                          const EdgeInsets.all(
+                                                              10.0),
                                                       child: CircleAvatar(
                                                         radius: 60,
                                                         backgroundColor:
@@ -186,20 +141,25 @@ class _NotePageState extends State<NotePage> {
                                               width: 150,
                                               height: 150,
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 color: Color(0xffF2F2F2),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(0.0),
+                                                padding:
+                                                    const EdgeInsets.all(0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
                                                   child: Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       ShowOneNode(
-                                                          userEmail:
-                                                              user?['userEmail']??""),
+                                                          userEmail: user?[
+                                                                  'userEmail'] ??
+                                                              ""),
                                                     ],
                                                   ),
                                                 ),
@@ -212,43 +172,26 @@ class _NotePageState extends State<NotePage> {
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20)),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
                                           child: TextField(
-                                              controller: _searchController,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _searchQuery = value.trim();
-                                                });
-                                              },
                                               decoration: InputDecoration(
-                                                suffixIcon: IconButton(
-                                                  icon: Icon(Icons.send),
-                                                  onPressed: () {
-                                                    _fetchDataFromFirestore(
-                                                        _searchQuery);
-                                                  },
-                                                ),
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                hintText: "Search Text",
-                                                labelText: "Search",
-                                              )),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(Icons.send),
+                                              onPressed: () {
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => SearchNode(),));
+
+                                              },
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            hintText: "Search Text",
+                                            labelText: "Search",
+                                          )),
                                         ),
-                                       
-                                       matchText!=null?Container(
-                                        height: 80,
-                                        margin: EdgeInsets.all(10),
-                                        padding: EdgeInsets.all(10),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffF2F2F2),
-                                          borderRadius: BorderRadius.circular(12)
-                                        ),
-                                        child: Text(matchText!,style: TextStyle(fontSize: 15),),
-                                       ):Container()
-              
+                                  
                                       ],
                                     ),
                                   ),
@@ -264,7 +207,8 @@ class _NotePageState extends State<NotePage> {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.white),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
                                         height: 20,
@@ -277,7 +221,8 @@ class _NotePageState extends State<NotePage> {
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      ShowPost(userEmail: user?['userEmail'] ?? ""),
+                                      ShowPost(
+                                          userEmail: user?['userEmail'] ?? ""),
                                       SizedBox(
                                         height: 15,
                                       ),
@@ -286,7 +231,8 @@ class _NotePageState extends State<NotePage> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => MoreNotesPage(),
+                                                builder: (context) =>
+                                                    MoreNotesPage(),
                                               ));
                                         },
                                         child: Text("See more"),

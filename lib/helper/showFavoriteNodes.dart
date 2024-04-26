@@ -115,12 +115,7 @@ class ShowFavoriteNode extends StatelessWidget {
                                         },
                                         icon: Icon(Icons.speaker),
                                       ),
-                                      IconButton(
-                                        onPressed: () {
-                                          // Handle more options button tap
-                                        },
-                                        icon: Icon(Icons.more_vert_rounded),
-                                      ),
+                                  
                                     ],
                                   )
                                 ],
