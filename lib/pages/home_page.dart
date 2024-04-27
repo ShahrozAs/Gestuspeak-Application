@@ -806,12 +806,10 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.toggle_on, color: Color(0xffFFCB2D))),
+           Image.asset('assets/images/toggle.png',width: 30,),
               Padding(
                 padding: const EdgeInsets.only(right:8.0),
-                child: Image.asset('assets/images/logout2.png',width: 30,),
+                child: InkWell(onTap: (){ FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 30,)),
               )
           // Padding(
           //   padding: const EdgeInsets.only(right: 10.0),
