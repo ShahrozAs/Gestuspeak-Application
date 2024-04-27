@@ -809,19 +809,23 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               onPressed: () {},
               icon: Icon(Icons.toggle_on, color: Color(0xffFFCB2D))),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: CircleAvatar(
-              backgroundColor: Color(0xffF2F2F2),
-              radius: 20,
-              child: IconButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                icon: Icon(Icons.logout, color: Color(0xffFFCB2D)),
-              ),
-            ),
-          ),
+              Padding(
+                padding: const EdgeInsets.only(right:8.0),
+                child: Image.asset('assets/images/logout2.png',width: 30,),
+              )
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 10.0),
+          //   child: CircleAvatar(
+          //     backgroundColor: Color(0xffF2F2F2),
+          //     radius: 20,
+          //     child: IconButton(
+          //       onPressed: () {
+          //         FirebaseAuth.instance.signOut();
+          //       },
+          //       icon: Icon(Icons.logout, color: Color(0xffFFCB2D)),
+          //     ),
+          //   ),
+          // ),
         ],
         backgroundColor: Colors.white,
         elevation: 0,

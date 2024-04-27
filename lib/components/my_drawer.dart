@@ -19,7 +19,7 @@ class MyDrawer extends StatelessWidget {
           children: [
             Column(
               children: [
-                DrawerHeader(child: Image.asset('assets/images/logo3r.png',width: 120,height: 120,)),
+                DrawerHeader(child: Image.asset('assets/images/logo5r.png',width: 110,height: 110,)),
                 SizedBox(
                   height: 25,
                 ),
@@ -27,6 +27,7 @@ class MyDrawer extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(
                     title: Text("P E R S O N A L  I N F O"),
+                    leading: Image.asset('assets/images/profile1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
@@ -37,6 +38,7 @@ class MyDrawer extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(
                     title: Text("E D I T  P R O F I L E"),
+                     leading: Image.asset('assets/images/editprofile.png',width: 29,),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
@@ -47,6 +49,7 @@ class MyDrawer extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListTile(
                     title: Text("U S E R  G U I D E"),
+                       leading: Image.asset('assets/images/manual1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
@@ -60,6 +63,7 @@ class MyDrawer extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25.0,bottom: 25.0),
                   child: ListTile(
                     title: Text("L O G O U T"),
+                       leading: Image.asset('assets/images/logout1.png',width: 35,),
                     onTap: () {
                 
                       FirebaseAuth.instance.signOut();
