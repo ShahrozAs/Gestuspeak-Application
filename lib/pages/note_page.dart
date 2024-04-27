@@ -64,196 +64,199 @@ class _NotePageState extends State<NotePage> {
       ),
       drawer: MyDrawer(),
       body: Center(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      future: getUserDetails(),
-                      builder: (context, snapshot) {
-                        //during loading
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: Text("Error :${snapshot.error}"),
-                          );
-                        } else if (snapshot.hasData) {
-                          Map<String, dynamic>? user = snapshot.data!.data();
-                          return Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                  ),
-                                  width: double.infinity,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              onTap: selectImage,
-                                              child: _image != null
-                                                  ? Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: CircleAvatar(
-                                                        radius: 60,
-                                                        backgroundImage:
-                                                            MemoryImage(
-                                                          (_image!),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        future: getUserDetails(),
+                        builder: (context, snapshot) {
+                          //during loading
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text("Error :${snapshot.error}"),
+                            );
+                          } else if (snapshot.hasData) {
+                            Map<String, dynamic>? user = snapshot.data!.data();
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                    ),
+                                    width: double.infinity,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              InkWell(
+                                                onTap: selectImage,
+                                                child: _image != null
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                10.0),
+                                                        child: CircleAvatar(
+                                                          radius: 60,
+                                                          backgroundImage:
+                                                              MemoryImage(
+                                                            (_image!),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                10.0),
+                                                        child: CircleAvatar(
+                                                          radius: 60,
+                                                          backgroundColor:
+                                                              Color(0xffF2F2F2),
+                                                          foregroundImage: NetworkImage(
+                                                              '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
+                                                              //  "${user['imageLink']}"
+                                                              ),
                                                         ),
                                                       ),
-                                                    )
-                                                  : Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: CircleAvatar(
-                                                        radius: 60,
-                                                        backgroundColor:
-                                                            Color(0xffF2F2F2),
-                                                        foregroundImage: NetworkImage(
-                                                            '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
-                                                            //  "${user['imageLink']}"
-                                                            ),
-                                                      ),
-                                                    ),
-                                            ),
-                                            Container(
-                                              width: 150,
-                                              height: 150,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: Color(0xffF2F2F2),
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(0.0),
+                                              Container(
+                                                width: 150,
+                                                height: 150,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Color(0xffF2F2F2),
+                                                ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      ShowOneNode(
-                                                          userEmail: user?[
-                                                                  'userEmail'] ??
-                                                              ""),
-                                                    ],
+                                                  padding:
+                                                      const EdgeInsets.all(0.0),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        10.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        ShowOneNode(
+                                                            userEmail: user?[
+                                                                    'userEmail'] ??
+                                                                ""),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 25,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: TextField(
-                                              decoration: InputDecoration(
-                                            suffixIcon: IconButton(
-                                              icon: Icon(Icons.send),
-                                              onPressed: () {
-                                            Navigator.push(context,MaterialPageRoute(builder: (context) => SearchNode(),));
-
-                                              },
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            hintText: "Search Text",
-                                            labelText: "Search",
-                                          )),
-                                        ),
-                                  
-                                      ],
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 25,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: TextField(
+                                                decoration: InputDecoration(
+                                              suffixIcon: IconButton(
+                                                icon: Icon(Icons.send),
+                                                onPressed: () {
+                                              Navigator.push(context,MaterialPageRoute(builder: (context) => SearchNode(),));
+          
+                                                },
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              hintText: "Search Text",
+                                              labelText: "Search",
+                                            )),
+                                          ),
+                                    
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Container(
-                                  height: 300,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.white),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Container(
-                                        height: 3.0,
-                                        width: 40,
-                                        color: Colors.black,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      ShowPost(
-                                          userEmail: user?['userEmail'] ?? ""),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MoreNotesPage(),
-                                              ));
-                                        },
-                                        child: Text("See more"),
-                                        style: ElevatedButton.styleFrom(
-                                          foregroundColor: Color(0xffFFCB2D),
-                                          backgroundColor: Color(0xff6B6A5D),
-                                        ),
-                                      )
-                                    ],
+                                  SizedBox(
+                                    height: 15,
                                   ),
-                                )
-                              ],
-                            ),
-                          );
-                        } else {
-                          return Center(
-                            child: Text("No Data Found"),
-                          );
-                        }
-                      })),
-            ],
+                                  Container(
+                                    height: 300,
+                                    width: double.infinity,
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.white),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Container(
+                                          height: 3.0,
+                                          width: 40,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        ShowPost(
+                                            userEmail: user?['userEmail'] ?? ""),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MoreNotesPage(),
+                                                ));
+                                          },
+                                          child: Text("See more"),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Color(0xffFFCB2D),
+                                            backgroundColor: Color(0xff6B6A5D),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Center(
+                              child: Text("No Data Found"),
+                            );
+                          }
+                        })),
+              ],
+            ),
           ),
         ),
       ),

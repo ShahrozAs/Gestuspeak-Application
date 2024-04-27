@@ -49,7 +49,7 @@ void searchFromFirebase(String query) async {
                   BoxDecoration(borderRadius: BorderRadius.circular(20)),
               child: TextField(
                   onChanged: (query) {
-                    searchFromFirebase(query);
+                    searchFromFirebase(query.toUpperCase());
                   },
                   decoration: InputDecoration(
                     suffixIcon: IconButton(

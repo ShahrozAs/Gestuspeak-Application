@@ -9,11 +9,9 @@
 // import 'package:gestuspeak/pages/note_page.dart';
 // import 'package:flutter_tts/flutter_tts.dart';
 
-
 // class HomePage extends StatelessWidget {
 
 //   HomePage({super.key});
-
 
 //   final FlutterTts flutterTts = FlutterTts();
 //   Future<void> _speak(String text) async {
@@ -26,8 +24,6 @@
 
 //   bool isSelect = true;
 //   String nodes="This is my Laptop";
-
-
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -43,7 +39,7 @@
 //   //       .doc(currentUser!.email)
 //   //       .get();
 //   // }
-  
+
 // void saveVoiceNode() async {
 //   try {
 //     showDialog(
@@ -57,11 +53,11 @@
 //         );
 //       },
 //     );
-    
+
 //     String resp = await storeData().saveVoiceNodes(nodes: nodes);
-    
+
 //     Navigator.pop(context); // Close the saving dialog
-    
+
 //     if (resp == "Success") {
 //       // Optionally show a success message or perform any other action upon successful save
 //       print("Node saved successfully!");
@@ -74,7 +70,6 @@
 //     // Handle error case
 //   }
 // }
-
 
 //     return Scaffold(
 //       backgroundColor: Color(0xffF2F2F2),
@@ -93,9 +88,9 @@
 //         elevation: 0,
 //       ),
 //       drawer: MyDrawer(),
-//       body: 
+//       body:
 //        Center(
-//          child: Container(     
+//          child: Container(
 //            child: Column(
 //             mainAxisAlignment: MainAxisAlignment.center,
 //              children: [
@@ -129,13 +124,13 @@
 //                             borderRadius: BorderRadius.circular(12),
 //                             color: Colors.white,
 //                           ),
-                 
+
 //                           child: Column(
 //                             children: [
 //                                Container(
 //                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
 //                                 width: double.infinity,
-                              
+
 //                                  margin: EdgeInsets.all(10),
 //                                  height: 200,
 //                                 child: Padding(
@@ -158,17 +153,16 @@
 //                                   ),
 //                                 ) ,
 //                                ),
-                              
-                            
+
 //                                   ElevatedButton(onPressed: (){
 //                                      saveVoiceNode();
-               
+
 //                                   }, child:Text("Add note"),style: ElevatedButton.styleFrom(
 //                                     foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
 //                                   ),)
 //                             ],
 //                           ),
-                          
+
 //                         )
 //                       ]),
 //                     ),
@@ -177,8 +171,7 @@
 //            ),
 //          ),
 //        ),
-      
-      
+
 //       bottomNavigationBar: BottomNavigationBar(
 //         backgroundColor: Colors.white,
 //         selectedItemColor: Color(0xffFFCB2D),
@@ -232,15 +225,13 @@
 //             case 3:
 //               // Navigator.pushNamed(context, videosScreenRoute);
 //               break;
-       
+
 //           }
 //         },
 //       ),
 //     );
 //   }
 // }
-
-
 
 // // one time receive data ONLY
 // import 'dart:async';
@@ -338,7 +329,6 @@
 //   }
 // }
 
-
 // import 'dart:async';
 // import 'dart:typed_data';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -383,11 +373,11 @@
 //         );
 //       },
 //     );
-    
+
 //     String resp = await storeData().saveVoiceNodes(nodes: receivedData);
-    
+
 //     Navigator.pop(context); // Close the saving dialog
-    
+
 //     if (resp == "Success") {
 //       // Optionally show a success message or perform any other action upon successful save
 //       print("Node saved successfully!");
@@ -491,7 +481,7 @@
 //             SizedBox(height: 10),
 //             if (receivedData.isNotEmpty)
 //              Center(
-//          child: Container(     
+//          child: Container(
 //            child: Column(
 //             mainAxisAlignment: MainAxisAlignment.center,
 //              children: [
@@ -525,13 +515,13 @@
 //                             borderRadius: BorderRadius.circular(12),
 //                             color: Colors.white,
 //                           ),
-                 
+
 //                           child: Column(
 //                             children: [
 //                                Container(
 //                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Color(0xffF2F2F2)),
 //                                 width: double.infinity,
-                              
+
 //                                  margin: EdgeInsets.all(10),
 //                                  height: 200,
 //                                 child: Padding(
@@ -554,17 +544,16 @@
 //                                   ),
 //                                 ) ,
 //                                ),
-                              
-                            
+
 //                                   ElevatedButton(onPressed: (){
 //                                      saveVoiceNode();
-               
+
 //                                   }, child:Text("Add note"),style: ElevatedButton.styleFrom(
 //                                     foregroundColor: Color(0xffFFCB2D),backgroundColor: Color(0xff6B6A5D),
 //                                   ),)
 //                             ],
 //                           ),
-                          
+
 //                         )
 //                       ]),
 //                     ),
@@ -573,7 +562,7 @@
 //            ),
 //          ),
 //        ),
-      
+
 //           ],
 //         ),
 //       ),
@@ -639,12 +628,6 @@
 //     connection?.dispose();
 //   }
 // }
-
-
-
-
-
-
 
 import 'dart:async';
 import 'dart:typed_data';
@@ -764,11 +747,11 @@ class _HomePageState extends State<HomePage> {
   //   });
   // }
 
-void _onDataReceived(Uint8List data) {
-  setState(() {
-    receivedData += String.fromCharCodes(data);
-  });
-}
+  void _onDataReceived(Uint8List data) {
+    setState(() {
+      receivedData += String.fromCharCodes(data);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -792,39 +775,40 @@ void _onDataReceived(Uint8List data) {
 //   }
 // }
 
+    String imageAsset = '';
 
-String imageAsset = '';
+    if (receivedData.isNotEmpty) {
+      // Get the last character of receivedData
+      String lastCharacter = receivedData.substring(receivedData.length - 1);
 
-if (receivedData.isNotEmpty) {
-  // Get the last character of receivedData
-  String lastCharacter = receivedData.substring(receivedData.length - 1);
-  
-  // Check if the last character is a valid alphabet letter
-  if (RegExp(r'[A-Za-z]').hasMatch(lastCharacter)) {
-    // Mapping last received character to corresponding image
-    int index = lastCharacter.toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
-    if (index >= 0 && index < alphabetSymbols.length) {
-      imageAsset = alphabetSymbols[index];
-    } else {
-      // If index is out of range, use a default image or handle the case appropriately
-      // For example, you can show a placeholder image or do nothing
-      imageAsset = 'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+      // Check if the last character is a valid alphabet letter
+      if (RegExp(r'[A-Za-z]').hasMatch(lastCharacter)) {
+        // Mapping last received character to corresponding image
+        int index =
+            lastCharacter.toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
+        if (index >= 0 && index < alphabetSymbols.length) {
+          imageAsset = alphabetSymbols[index];
+        } else {
+          // If index is out of range, use a default image or handle the case appropriately
+          // For example, you can show a placeholder image or do nothing
+          imageAsset =
+              'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+        }
+      } else {
+        // If the last character is not a valid alphabet letter, handle the case appropriately
+        // For example, you can show a placeholder image or do nothing
+        imageAsset =
+            'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+      }
     }
-  } else {
-    // If the last character is not a valid alphabet letter, handle the case appropriately
-    // For example, you can show a placeholder image or do nothing
-    imageAsset = 'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
-  }
-}
-
-
-
 
     return Scaffold(
       backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.toggle_on, color: Color(0xffFFCB2D))),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.toggle_on, color: Color(0xffFFCB2D))),
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: CircleAvatar(
@@ -847,8 +831,8 @@ if (receivedData.isNotEmpty) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-      
-            if (!isConnected && receivedData.isEmpty) Text('You don\'t have text'),
+            if (!isConnected && receivedData.isEmpty)
+              Text('You don\'t have text'),
             if (isConnected && receivedData.isNotEmpty)
               Text(
                 'Received Data:',
@@ -895,20 +879,24 @@ if (receivedData.isNotEmpty) {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12), color: Color(0xffF2F2F2)),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Color(0xffF2F2F2)),
                                       width: double.infinity,
                                       margin: EdgeInsets.all(10),
                                       height: 200,
                                       child: Padding(
                                         padding: const EdgeInsets.all(15.0),
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
                                               child: SingleChildScrollView(
                                                 scrollDirection: Axis.vertical,
                                                 child: Text(
-                                                  receivedData ?? "You dont have text",
+                                                  receivedData ??
+                                                      "You dont have text",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyLarge!
@@ -929,18 +917,80 @@ if (receivedData.isNotEmpty) {
                                         ),
                                       ),
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        saveVoiceNode();
-                                        setState(() {
-                                          receivedData="";
-                                        });
-                                      },
-                                      child: Text("Add note"),
-                                      style: ElevatedButton.styleFrom(
-                                        foregroundColor: Color(0xffFFCB2D),
-                                        backgroundColor: Color(0xff6B6A5D),
-                                      ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            saveVoiceNode();
+                                            setState(() {
+                                              
+                                            receivedData = "";
+                                            });
+                                          },
+                                          child: Text("Add note"),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Color(0xffFFCB2D),
+                                            backgroundColor: Color(0xff6B6A5D),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 100, // Set the width
+                                          height: 40, // Set the height
+                                          decoration: BoxDecoration(
+                                            color: Color(
+                                                0xff6B6A5D), // Set the background color
+                                            borderRadius: BorderRadius.circular(
+                                                50), // Optional: Apply border radius
+                                          ),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              if (receivedData.isNotEmpty) {
+                                                setState(() {
+                                                  // Remove the last character from receivedData
+                                                  receivedData =
+                                                      receivedData.substring(
+                                                          0,
+                                                          receivedData.length -
+                                                              1);
+                                                });
+                                              }
+                                            },
+                                            icon: Icon(
+                                              Icons.backspace, size: 20,
+                                              color: Color(
+                                                  0xffFFCB2D), // Set the icon color
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 100, // Set the width
+                                          height: 40, // Set the height
+                                          decoration: BoxDecoration(
+                                            color: Color(
+                                                0xff6B6A5D), // Set the background color
+                                            borderRadius: BorderRadius.circular(
+                                                50), // Optional: Apply border radius
+                                          ),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              if (receivedData.isNotEmpty) {
+                                                setState(() {
+                                                  // Remove the last character from receivedData
+                                                  receivedData ="";
+                                                      
+                                                });
+                                              }
+                                            },
+                                            icon: Icon(
+                                              Icons.delete_forever, size: 20,
+                                              color: Color(
+                                                  0xffFFCB2D), // Set the icon color
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     )
                                   ],
                                 ),
