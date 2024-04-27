@@ -809,7 +809,8 @@ class _HomePageState extends State<HomePage> {
            Image.asset('assets/images/toggle.png',width: 30,),
               Padding(
                 padding: const EdgeInsets.only(right:8.0),
-                child: InkWell(onTap: (){ FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 30,)),
+                child: InkWell(onTap: (){ 
+                  FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 30,)),
               )
           // Padding(
           //   padding: const EdgeInsets.only(right: 10.0),

@@ -49,12 +49,10 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.grey[200], // Light background for modern look
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.toggle_on,
-                color: Color(0xffFFCB2D),
-              )),
+    Padding(
+         padding: const EdgeInsets.only(right: 20.0),
+         child: Image.asset('assets/images/toggle.png',width: 30,),
+       ),
         
         ],
         backgroundColor: Colors.white,

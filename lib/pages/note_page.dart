@@ -11,6 +11,7 @@ import 'package:gestuspeak/helper/showOneNodeOnly.dart';
 import 'package:gestuspeak/pages/favorite_page.dart';
 import 'package:gestuspeak/pages/home_page.dart';
 import 'package:gestuspeak/pages/more_notespage.dart';
+import 'package:gestuspeak/pages/search_page.dart';
 import 'package:gestuspeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -52,12 +53,10 @@ class _NotePageState extends State<NotePage> {
       backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.toggle_on,
-                color: Color(0xffFFCB2D),
-              )),
+           Padding(
+         padding: const EdgeInsets.only(right: 20.0),
+         child: Image.asset('assets/images/toggle.png',width: 30,),
+       ),
         ],
         backgroundColor: Colors.white,
         elevation: 0,
@@ -172,26 +171,27 @@ class _NotePageState extends State<NotePage> {
                                           SizedBox(
                                             height: 25,
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: TextField(
-                                                decoration: InputDecoration(
-                                              suffixIcon: IconButton(
-                                                icon: Icon(Icons.send),
-                                                onPressed: () {
-                                              Navigator.push(context,MaterialPageRoute(builder: (context) => SearchNode(),));
-          
-                                                },
+                                          InkWell(
+                                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => SearchNode(),));},
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),border: Border.all(width: 1,color: Colors.black)),
+                                              child:Padding(
+                                                padding: const EdgeInsets.all(7.0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left:8.0),
+                                                      child: Text("Search",),
+                                                    ),
+                                                    IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => SearchNode(),));}, icon:Icon(Icons.send))
+                                                  ],
+                                                ),
                                               ),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              hintText: "Search Text",
-                                              labelText: "Search",
-                                            )),
+                                            ),
                                           ),
                                     
                                         ],

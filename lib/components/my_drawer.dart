@@ -30,7 +30,7 @@ class MyDrawer extends StatelessWidget {
                     leading: Image.asset('assets/images/profile1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
                     },
                   ),
                 ),
@@ -41,7 +41,7 @@ class MyDrawer extends StatelessWidget {
                      leading: Image.asset('assets/images/editprofile.png',width: 29,),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(),));
                     },
                   ),
                 ),
@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
                        leading: Image.asset('assets/images/manual1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => UserGuidePage(),));
                     },
                   ),
                 ),
@@ -65,8 +65,9 @@ class MyDrawer extends StatelessWidget {
                     title: Text("L O G O U T"),
                        leading: Image.asset('assets/images/logout1.png',width: 35,),
                     onTap: () {
-                
+                        Navigator.pop(context);
                       FirebaseAuth.instance.signOut();
+                      
                     },
                   ),
                 ),

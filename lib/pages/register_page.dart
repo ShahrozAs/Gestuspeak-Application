@@ -77,7 +77,7 @@ if (userCredential!=null && userCredential.user!=null) {
                   
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/logo3r.png',width: 130,height: 130,),
+                    Image.asset('assets/images/logo5r.png',width: 130,height: 130,),
                     SizedBox(height: 25,),
                     Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge),
                     SizedBox(height: 50,),

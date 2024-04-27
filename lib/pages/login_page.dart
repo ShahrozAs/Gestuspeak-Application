@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gestuspeak/components/my_Button.dart';
 import 'package:gestuspeak/components/my_TextField.dart';
 import 'package:gestuspeak/helper/helper_functions.dart';
+import 'package:gestuspeak/pages/forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   void Function()? onTap;
@@ -55,7 +57,7 @@ TextEditingController passwordEditController=TextEditingController();
                   
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/logo3r.png',width: 130,height: 130,),
+                    Image.asset('assets/images/logo5r.png',width: 130,height: 130,),
                     SizedBox(height: 25,),
                     Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge),
                     SizedBox(height: 50,),
@@ -65,8 +67,10 @@ TextEditingController passwordEditController=TextEditingController();
                     SizedBox(height: 10,),
                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                         Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),),
+                      children:  [
+                         GestureDetector(onTap: (){
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage(),));
+                         },child: const Text("Forgot Password?",style: TextStyle(color:Color(0xff6B645D)),)),
                       ],
                     ),
              
