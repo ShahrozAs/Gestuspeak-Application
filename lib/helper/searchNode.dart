@@ -40,8 +40,20 @@ void searchFromFirebase(String query) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+           appBar: AppBar(
+            automaticallyImplyLeading: true,
+        actions: [
+       Padding(
+         padding: const EdgeInsets.only(right: 20.0),
+         child: Image.asset('assets/images/toggle.png',width: 30,),
+       ),
+      
+        ],
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+      ),
       body: Padding(
-        padding: EdgeInsets.only(top: 45, left: 20, right: 20, bottom: 20),
+        padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
         child: Column(
           children: [
             Container(

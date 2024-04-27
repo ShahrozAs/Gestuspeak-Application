@@ -808,7 +808,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
            Image.asset('assets/images/toggle.png',width: 30,),
               Padding(
-                padding: const EdgeInsets.only(right:8.0),
+                padding: const EdgeInsets.only(left: 15.0,right:15.0),
                 child: InkWell(onTap: (){ 
                   FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 30,)),
               )
