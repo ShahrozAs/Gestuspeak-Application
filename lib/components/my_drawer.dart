@@ -13,7 +13,7 @@ class MyDrawer extends StatelessWidget {
     
       backgroundColor: Color(0xffF2F2F2),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 15.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -24,9 +24,9 @@ class MyDrawer extends StatelessWidget {
                   height: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 15.0),
                   child: ListTile(
-                    title: Text("P E R S O N A L  I N F O"),
+                    title: Text("P E R S O N A L  I N F O",style: TextStyle(fontSize: 14),),
                     leading: Image.asset('assets/images/profile1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
@@ -35,9 +35,9 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 15.0),
                   child: ListTile(
-                    title: Text("E D I T  P R O F I L E"),
+                    title: Text("E D I T  P R O F I L E",style: TextStyle(fontSize: 14),),
                      leading: Image.asset('assets/images/editprofile.png',width: 29,),
                     onTap: () {
                       Navigator.pop(context);
@@ -46,9 +46,9 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 15.0),
                   child: ListTile(
-                    title: Text("U S E R  G U I D E"),
+                    title: Text("U S E R  G U I D E",style: TextStyle(fontSize: 14),),
                        leading: Image.asset('assets/images/manual1.png',width: 30,),
                     onTap: () {
                       Navigator.pop(context);
@@ -60,9 +60,9 @@ class MyDrawer extends StatelessWidget {
             ),
         
               Padding(
-                  padding: const EdgeInsets.only(left: 20.0,bottom: 25.0),
+                  padding: const EdgeInsets.only(left: 15.0,bottom: 25.0),
                   child: ListTile(
-                    title: Text("L O G O U T"),
+                    title: Text("L O G O U T",style: TextStyle(fontSize: 14),),
                        leading: Image.asset('assets/images/logout1.png',width: 35,),
                     onTap: () {
                         Navigator.pop(context);

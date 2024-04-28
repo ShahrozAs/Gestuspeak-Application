@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:GestuSpeak/components/full_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
         .get();
   }
 
-  Uint8List? _image;
-
-  void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = img;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,18 +71,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   return Column(
                     children: [
                       InkWell(
-                        onTap: selectImage,
-                        child: _image != null
-                            ? Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: CircleAvatar(
-                                  radius: 90,
-                                  backgroundImage: MemoryImage(
-                                    (_image!),
-                                  ),
-                                ),
-                              )
-                            : Padding(
+                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => FullImagePreview(imageUrl: user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"),));},
+                        child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: CircleAvatar(
                                   radius: 90,
