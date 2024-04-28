@@ -111,7 +111,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_tts/flutter_tts.dart';
-// import 'package:gestuspeak/helper/resources.dart';
+// import 'package:GestuSpeak/helper/resources.dart';
 
 // class ShowPost extends StatelessWidget {
 //   final String userEmail;
@@ -294,7 +294,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:gestuspeak/helper/resources.dart';
+import 'package:GestuSpeak/helper/resources.dart';
 
 class ShowPost extends StatefulWidget {
   final String userEmail;
@@ -340,7 +340,6 @@ class _ShowPostState extends State<ShowPost> {
         String resp1 = await storeData().updateSaveVoiceNodes(
           docId,
           isFavorite,
-
         );
 
         // Navigator.pop(context); // Close the saving dialog
@@ -380,11 +379,60 @@ class _ShowPostState extends State<ShowPost> {
             .where('timestamp', isEqualTo: timestamp)
             .get();
 
-        querySnapshot.docs.forEach((doc) async {
-          await doc.reference.delete();
-        });
+        showDialog(
+  context: context,
+  builder: (context) {
+    return Center(
+      child: Container(
+        width: 400, // Adjust the width as needed
+        // height: 500, // Adjust the height as needed
+        child: AlertDialog(
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Do you want to delete this message?",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+              ),
+              SizedBox(height: 20), // Add spacing between text and buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("No"),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      querySnapshot.docs.forEach((doc) async {
+                        await doc.reference.delete();
+                      });
+                      Navigator.pop(context);
+                      print('Node(s) deleted successfully!');
+                    },
+                    child: Text("Yes"),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  },
+);
 
-        print('Node(s) deleted successfully!');
       } catch (e) {
         print('Error deleting node: $e');
       }
@@ -422,7 +470,7 @@ class _ShowPostState extends State<ShowPost> {
                 String docId = nodeData['key'] ?? '';
                 bool isFavorite = nodeData['isFavorite'] ?? false;
                 // print(
-                    // "=====================================================================$docId");
+                // "=====================================================================$docId");
 
                 return GestureDetector(
                   onTap: () {

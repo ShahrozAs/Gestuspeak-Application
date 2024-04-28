@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/components/my_drawer.dart';
-import 'package:gestuspeak/helper/checkpPost.dart';
-import 'package:gestuspeak/pages/favorite_page.dart';
-import 'package:gestuspeak/pages/home_page.dart';
-import 'package:gestuspeak/pages/note_page.dart';
+import 'package:GestuSpeak/components/my_drawer.dart';
+import 'package:GestuSpeak/helper/checkpPost.dart';
+import 'package:GestuSpeak/pages/favorite_page.dart';
+import 'package:GestuSpeak/pages/home_page.dart';
+import 'package:GestuSpeak/pages/note_page.dart';
 
 class MoreNotesPage extends StatelessWidget {
    MoreNotesPage({super.key});

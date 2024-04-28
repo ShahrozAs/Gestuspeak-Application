@@ -1,4 +1,4 @@
-package com.example.gestuspeak
+package com.example.GestuSpeak
 
 import io.flutter.embedding.android.FlutterActivity
 

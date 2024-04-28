@@ -1,6 +1,6 @@
 {
-    "name": "gestuspeak",
-    "short_name": "gestuspeak",
+    "name": "GestuSpeak",
+    "short_name": "GestuSpeak",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

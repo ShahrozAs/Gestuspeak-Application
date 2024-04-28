@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:gestuspeak/firebase_options.dart';
+import 'package:GestuSpeak/firebase_options.dart';
 
-import 'package:gestuspeak/pages/splash_page.dart';
+import 'package:GestuSpeak/pages/splash_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/components/my_Button.dart';
-import 'package:gestuspeak/components/my_TextField.dart';
-import 'package:gestuspeak/helper/helper_functions.dart';
+import 'package:GestuSpeak/components/my_Button.dart';
+import 'package:GestuSpeak/components/my_TextField.dart';
+import 'package:GestuSpeak/components/my_TextPasswordField.dart';
+import 'package:GestuSpeak/helper/helper_functions.dart';
 
 class RegistorPage extends StatefulWidget {
   void Function()? onTap;
@@ -85,9 +86,13 @@ if (userCredential!=null && userCredential.user!=null) {
                     SizedBox(height: 10,),
                     MyTextField(hint: "john@gmail.com", label: "Email", obscureText: false, controller:emailEditController ),
                     SizedBox(height: 10,),
-                    MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
+                   MyPasswordField(hint: "Password", label: "Password", controller: passwordEditController),
+                  
+                    // MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
                     SizedBox(height: 10,),
-                    MyTextField(hint: "Password", label: "Confirm Password", obscureText: true, controller:confirmPasswordEditController ),
+                   MyPasswordField(hint: "Confirm Password", label: "Confirm Password", controller: confirmPasswordEditController),
+                  
+                    // MyTextField(hint: "Password", label: "Confirm Password", obscureText: true, controller:confirmPasswordEditController ),
                     SizedBox(height: 10,),
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.end,

@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '552709284925',
     projectId: 'clone-c5720',
     storageBucket: 'clone-c5720.appspot.com',
-    iosBundleId: 'com.example.gestuspeak',
+    iosBundleId: 'com.example.GestuSpeak',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '552709284925',
     projectId: 'clone-c5720',
     storageBucket: 'clone-c5720.appspot.com',
-    iosBundleId: 'com.example.gestuspeak.RunnerTests',
+    iosBundleId: 'com.example.GestuSpeak.RunnerTests',
   );
 }

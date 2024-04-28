@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gestuspeak/components/my_Button.dart';
-import 'package:gestuspeak/components/my_TextField.dart';
-import 'package:gestuspeak/helper/helper_functions.dart';
-import 'package:gestuspeak/pages/forgot_password_page.dart';
+import 'package:GestuSpeak/components/my_Button.dart';
+import 'package:GestuSpeak/components/my_TextField.dart';
+import 'package:GestuSpeak/components/my_TextPasswordField.dart';
+import 'package:GestuSpeak/helper/helper_functions.dart';
+import 'package:GestuSpeak/pages/forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   void Function()? onTap;
@@ -42,6 +43,8 @@ TextEditingController passwordEditController=TextEditingController();
 
 }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +66,8 @@ TextEditingController passwordEditController=TextEditingController();
                     SizedBox(height: 50,),
                     MyTextField(hint: "john@gmail.com", label: "Username or Email", obscureText: false, controller:emailEditController ),
                     SizedBox(height: 10,),
-                    MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
+                   MyPasswordField(hint: "Password", label: "Password", controller: passwordEditController),
+                    // MyTextField(hint: "Password", label: "Password", obscureText: true, controller:passwordEditController ),
                     SizedBox(height: 10,),
                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,

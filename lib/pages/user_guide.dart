@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:gestuspeak/components/my_drawer.dart';
-import 'package:gestuspeak/helper/alphabet_images.dart';
+import 'package:GestuSpeak/components/my_drawer.dart';
+import 'package:GestuSpeak/helper/alphabet_images.dart';
 
 class UserGuidePage extends StatefulWidget {
   const UserGuidePage({super.key});

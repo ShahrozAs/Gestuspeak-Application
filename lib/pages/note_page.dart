@@ -3,16 +3,17 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/components/my_bottomNavigation.dart';
-import 'package:gestuspeak/components/my_drawer.dart';
-import 'package:gestuspeak/helper/checkpPost.dart';
-import 'package:gestuspeak/helper/searchNode.dart';
-import 'package:gestuspeak/helper/showOneNodeOnly.dart';
-import 'package:gestuspeak/pages/favorite_page.dart';
-import 'package:gestuspeak/pages/home_page.dart';
-import 'package:gestuspeak/pages/more_notespage.dart';
-import 'package:gestuspeak/pages/search_page.dart';
-import 'package:gestuspeak/pages/upload_image.dart';
+import 'package:GestuSpeak/components/full_image.dart';
+import 'package:GestuSpeak/components/my_bottomNavigation.dart';
+import 'package:GestuSpeak/components/my_drawer.dart';
+import 'package:GestuSpeak/helper/checkpPost.dart';
+import 'package:GestuSpeak/helper/searchNode.dart';
+import 'package:GestuSpeak/helper/showOneNodeOnly.dart';
+import 'package:GestuSpeak/pages/favorite_page.dart';
+import 'package:GestuSpeak/pages/home_page.dart';
+import 'package:GestuSpeak/pages/more_notespage.dart';
+import 'package:GestuSpeak/pages/search_page.dart';
+import 'package:GestuSpeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NotePage extends StatefulWidget {
@@ -32,14 +33,6 @@ class _NotePageState extends State<NotePage> {
         .get();
   }
 
-  Uint8List? _image;
-
-  void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = img;
-    });
-  }
 
   @override
   void dispose() {
@@ -109,21 +102,10 @@ class _NotePageState extends State<NotePage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               InkWell(
-                                                onTap: selectImage,
-                                                child: _image != null
-                                                    ? Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(
-                                                                10.0),
-                                                        child: CircleAvatar(
-                                                          radius: 60,
-                                                          backgroundImage:
-                                                              MemoryImage(
-                                                            (_image!),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Padding(
+                                                onTap:(){
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => FullImagePreview(imageUrl: user?['imageLink']??"https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"),));
+                                                },
+                                                child:Padding(
                                                         padding:
                                                             const EdgeInsets.all(
                                                                 10.0),
@@ -324,11 +306,11 @@ class _NotePageState extends State<NotePage> {
 
 
 // import 'package:flutter/material.dart';
-// import 'package:gestuspeak/components/my_bottomNavigation.dart';
-// import 'package:gestuspeak/components/my_drawer.dart';
-// import 'package:gestuspeak/pages/favorite_page.dart';
-// import 'package:gestuspeak/pages/home_page.dart';
-// import 'package:gestuspeak/pages/more_notespage.dart';
+// import 'package:GestuSpeak/components/my_bottomNavigation.dart';
+// import 'package:GestuSpeak/components/my_drawer.dart';
+// import 'package:GestuSpeak/pages/favorite_page.dart';
+// import 'package:GestuSpeak/pages/home_page.dart';
+// import 'package:GestuSpeak/pages/more_notespage.dart';
 
 // class NotePage extends StatefulWidget {
 //   const NotePage({super.key});

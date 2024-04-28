@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/pages/login_page.dart';
-import 'package:gestuspeak/pages/register_page.dart';
+import 'package:GestuSpeak/pages/login_page.dart';
+import 'package:GestuSpeak/pages/register_page.dart';
 
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({super.key});

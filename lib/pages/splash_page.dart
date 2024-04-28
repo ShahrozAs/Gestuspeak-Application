@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/auth/auth.dart';
-import 'package:gestuspeak/pages/user_guide.dart';
+import 'package:GestuSpeak/auth/auth.dart';
+import 'package:GestuSpeak/pages/user_guide.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

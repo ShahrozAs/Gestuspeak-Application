@@ -2,11 +2,11 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:gestuspeak/components/my_drawer.dart';
-// import 'package:gestuspeak/helper/resources.dart';
-// import 'package:gestuspeak/pages/favorite_page.dart';
-// import 'package:gestuspeak/pages/more_notespage.dart';
-// import 'package:gestuspeak/pages/note_page.dart';
+// import 'package:GestuSpeak/components/my_drawer.dart';
+// import 'package:GestuSpeak/helper/resources.dart';
+// import 'package:GestuSpeak/pages/favorite_page.dart';
+// import 'package:GestuSpeak/pages/more_notespage.dart';
+// import 'package:GestuSpeak/pages/note_page.dart';
 // import 'package:flutter_tts/flutter_tts.dart';
 
 // class HomePage extends StatelessWidget {
@@ -335,11 +335,11 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 // import 'package:flutter_tts/flutter_tts.dart';
-// import 'package:gestuspeak/components/my_drawer.dart';
-// import 'package:gestuspeak/helper/helper_functions.dart';
-// import 'package:gestuspeak/helper/resources.dart';
-// import 'package:gestuspeak/pages/favorite_page.dart';
-// import 'package:gestuspeak/pages/note_page.dart';
+// import 'package:GestuSpeak/components/my_drawer.dart';
+// import 'package:GestuSpeak/helper/helper_functions.dart';
+// import 'package:GestuSpeak/helper/resources.dart';
+// import 'package:GestuSpeak/pages/favorite_page.dart';
+// import 'package:GestuSpeak/pages/note_page.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
 // class HomePage extends StatefulWidget {
@@ -635,11 +635,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:gestuspeak/components/my_drawer.dart';
-import 'package:gestuspeak/helper/helper_functions.dart';
-import 'package:gestuspeak/helper/resources.dart';
-import 'package:gestuspeak/pages/favorite_page.dart';
-import 'package:gestuspeak/pages/note_page.dart';
+import 'package:GestuSpeak/components/my_drawer.dart';
+import 'package:GestuSpeak/helper/helper_functions.dart';
+import 'package:GestuSpeak/helper/resources.dart';
+import 'package:GestuSpeak/pages/favorite_page.dart';
+import 'package:GestuSpeak/pages/note_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {

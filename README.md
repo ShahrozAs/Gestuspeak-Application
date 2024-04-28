@@ -1,4 +1,4 @@
-# gestuspeak
+# GestuSpeak
 
 A new Flutter project.
 

@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gestuspeak/helper/resources.dart';
-import 'package:gestuspeak/pages/favorite_page.dart';
-import 'package:gestuspeak/pages/home_page.dart';
-import 'package:gestuspeak/pages/note_page.dart';
-import 'package:gestuspeak/pages/upload_image.dart';
+import 'package:GestuSpeak/helper/resources.dart';
+import 'package:GestuSpeak/pages/favorite_page.dart';
+import 'package:GestuSpeak/pages/home_page.dart';
+import 'package:GestuSpeak/pages/note_page.dart';
+import 'package:GestuSpeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:instagram_clone/helper/resources.dart';
 // import 'package:instagram_clone/pages/upload_image.dart';
