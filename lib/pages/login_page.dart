@@ -1,4 +1,6 @@
+import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:GestuSpeak/components/my_Button.dart';
@@ -6,6 +8,7 @@ import 'package:GestuSpeak/components/my_TextField.dart';
 import 'package:GestuSpeak/components/my_TextPasswordField.dart';
 import 'package:GestuSpeak/helper/helper_functions.dart';
 import 'package:GestuSpeak/pages/forgot_password_page.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   void Function()? onTap;
@@ -48,7 +51,32 @@ TextEditingController passwordEditController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+
+        title: Text("Login"),
+
+        actions: [
+          Row(
+            children: [
+              Text("Dark Mode"),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
+              ),
+            ],
+          ),
+        ],
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
+      ),
        body: Center(
          child: Container(
            child: SingleChildScrollView(
@@ -62,7 +90,7 @@ TextEditingController passwordEditController=TextEditingController();
                   children: [
                     Image.asset('assets/images/logo5r.png',width: 130,height: 130,),
                     SizedBox(height: 25,),
-                    Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge),
+                    Text("G E S T U S P E A K",style:Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 25)),
                     SizedBox(height: 50,),
                     MyTextField(hint: "john@gmail.com", label: "Username or Email", obscureText: false, controller:emailEditController ),
                     SizedBox(height: 10,),

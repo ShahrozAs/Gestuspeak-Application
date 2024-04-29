@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:GestuSpeak/components/full_image.dart';
+import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:GestuSpeak/components/my_drawer.dart';
 import 'package:GestuSpeak/helper/checkpPost.dart';
@@ -11,6 +13,7 @@ import 'package:GestuSpeak/pages/home_page.dart';
 import 'package:GestuSpeak/pages/note_page.dart';
 import 'package:GestuSpeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -39,19 +42,30 @@ class _ProfilePageState extends State<ProfilePage> {
     final DateTime userDateOfBirth = DateTime(1990, 1, 1);
 
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light background for modern look
-      appBar: AppBar(
+      backgroundColor: Theme.of(context).colorScheme.secondary, // Light background for modern look
+appBar: AppBar(
+  title: Text("Personal Info"),
         actions: [
-    Padding(
-         padding: const EdgeInsets.only(right: 20.0),
-         child: Image.asset('assets/images/toggle.png',width: 30,),
-       ),
-        
+          Row(
+            children: [
+              Text("Dark Mode"),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
+              ),
+            ],
+          ),
         ],
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -101,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: Colors.white),
+                              color: Theme.of(context).colorScheme.background),
                           margin: EdgeInsets.only(top: 25),
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
@@ -186,62 +200,62 @@ class _ProfilePageState extends State<ProfilePage> {
                 }
               })),
 
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Color(0xffFFCB2D),
-        unselectedItemColor: Color(0xff6B645D),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Theme.of(context).colorScheme.background,
+      //   selectedItemColor: Color(0xffFFCB2D),
+      //   // unselectedItemColor: Color(0xff6B645D),
 
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pending_actions_outlined),
-            label: 'Notes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_rounded),
-            label: 'favourite',
-          ),
-        ],
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: true,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.pending_actions_outlined),
+      //       label: 'Notes',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.favorite_outline_rounded),
+      //       label: 'favourite',
+      //     ),
+      //   ],
 
-        currentIndex: 1, // Set the initial index to Home
-        onTap: (index) {
-          // Handle navigation on item tap
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotePage(),
-                  ));
-              // Navigator.pushNamed(context, homeScreenRoute);
-              break;
-            case 1:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ));
-              // Navigator.pushNamed(context, searchScreenRoute);
-              break;
-            case 2:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FavoriteNotesPage(),
-                  ));
-              // Navigator.pushNamed(context, uploadScreenRoute);
-              break;
-            case 3:
-              // Navigator.pushNamed(context, videosScreenRoute);
-              break;
-          }
-        },
-      ),
+      //   currentIndex: 1, // Set the initial index to Home
+      //   onTap: (index) {
+      //     // Handle navigation on item tap
+      //     switch (index) {
+      //       case 0:
+      //         Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => NotePage(),
+      //             ));
+      //         // Navigator.pushNamed(context, homeScreenRoute);
+      //         break;
+      //       case 1:
+      //         Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => HomePage(),
+      //             ));
+      //         // Navigator.pushNamed(context, searchScreenRoute);
+      //         break;
+      //       case 2:
+      //         Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => FavoriteNotesPage(),
+      //             ));
+      //         // Navigator.pushNamed(context, uploadScreenRoute);
+      //         break;
+      //       case 3:
+      //         // Navigator.pushNamed(context, videosScreenRoute);
+      //         break;
+      //     }
+      //   },
+      // ),
     );
   }
 }

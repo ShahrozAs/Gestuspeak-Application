@@ -1,7 +1,10 @@
+import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:GestuSpeak/helper/resources.dart';
+import 'package:provider/provider.dart';
 
 class SearchNode extends StatefulWidget {
   const SearchNode({super.key});
@@ -40,17 +43,30 @@ void searchFromFirebase(String query) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-           appBar: AppBar(
-            automaticallyImplyLeading: true,
+        appBar: AppBar(
+        automaticallyImplyLeading: true,
+
+        title: Text("Search Notes"),
+
         actions: [
-       Padding(
-         padding: const EdgeInsets.only(right: 20.0),
-         child: Image.asset('assets/images/toggle.png',width: 30,),
-       ),
-      
+          Row(
+            children: [
+              Text("Dark Mode"),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
+              ),
+            ],
+          ),
         ],
-        backgroundColor: Colors.white,
-        elevation: 0.5,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
@@ -80,16 +96,17 @@ void searchFromFirebase(String query) async {
               itemCount: searchResult.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
+                
                   onTap: () {
                     // Handle post click
                   },
-                  child: Card(
+                  child: Card(margin: EdgeInsets.only(top: 10),
                     elevation: 0.5,
                     child: Container(
                       height: 85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: const Color(0xffF2F2F2),
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       width: double.infinity,
                       child: Padding(

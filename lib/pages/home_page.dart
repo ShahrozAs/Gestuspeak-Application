@@ -631,7 +631,9 @@
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -641,6 +643,7 @@ import 'package:GestuSpeak/helper/resources.dart';
 import 'package:GestuSpeak/pages/favorite_page.dart';
 import 'package:GestuSpeak/pages/note_page.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -803,30 +806,25 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xffF2F2F2),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      // backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
+        
         actions: [
-           Image.asset('assets/images/toggle.png',width: 30,),
-              Padding(
+          Row(children: [
+            Text("Dark Mode"),
+          CupertinoSwitch(value: Provider.of<ThemeProvider>(context,listen: false).isDarkMode, onChanged: (value){
+             Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
+          }),
+          Padding(
                 padding: const EdgeInsets.only(left: 15.0,right:15.0),
                 child: InkWell(onTap: (){ 
-                  FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 30,)),
+                  FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 40,)),
               )
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 10.0),
-          //   child: CircleAvatar(
-          //     backgroundColor: Color(0xffF2F2F2),
-          //     radius: 20,
-          //     child: IconButton(
-          //       onPressed: () {
-          //         FirebaseAuth.instance.signOut();
-          //       },
-          //       icon: Icon(Icons.logout, color: Color(0xffFFCB2D)),
-          //     ),
-          //   ),
-          // ),
+          ],),
+   
         ],
-        backgroundColor: Colors.white,
+        backgroundColor:Theme.of(context).colorScheme.background,
         elevation: 0,
       ),
       drawer: MyDrawer(),
@@ -876,7 +874,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.only(bottom: 20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.background,
                                 ),
                                 child: Column(
                                   children: [
@@ -884,7 +882,7 @@ class _HomePageState extends State<HomePage> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(12),
-                                          color: Color(0xffF2F2F2)),
+                                          color:Theme.of(context).colorScheme.secondary),
                                       width: double.infinity,
                                       margin: EdgeInsets.all(10),
                                       height: 200,
@@ -1010,9 +1008,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         selectedItemColor: Color(0xffFFCB2D),
-        unselectedItemColor: Color(0xff6B645D),
+        // unselectedItemColor: Color(0xff6B645D),
         showSelectedLabels: true,
         showUnselectedLabels: true,
         items: const <BottomNavigationBarItem>[

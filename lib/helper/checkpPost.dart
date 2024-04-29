@@ -482,7 +482,7 @@ class _ShowPostState extends State<ShowPost> {
                       height: 85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: const Color(0xffF2F2F2),
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       width: double.infinity,
                       child: Padding(
@@ -515,8 +515,7 @@ class _ShowPostState extends State<ShowPost> {
                                           : Icons.favorite_border_rounded,
                                       color: isFavorite
                                           ? Colors.red
-                                          : Colors
-                                              .black, // Update color based on isFavorite
+                                          :null, // Update color based on isFavorite
                                     ),
                                   ),
                                   IconButton(

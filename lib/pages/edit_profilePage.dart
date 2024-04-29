@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:GestuSpeak/themes/theme_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:GestuSpeak/helper/resources.dart';
@@ -8,6 +10,7 @@ import 'package:GestuSpeak/pages/home_page.dart';
 import 'package:GestuSpeak/pages/note_page.dart';
 import 'package:GestuSpeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 // import 'package:instagram_clone/helper/resources.dart';
 // import 'package:instagram_clone/pages/upload_image.dart';
 
@@ -63,10 +66,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Edit Profile'),
-        automaticallyImplyLeading: true,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+appBar: AppBar(
+  title: Text("Edit Profile"),
+        actions: [
+          Row(
+            children: [
+              Text("Dark Mode"),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
+              ),
+            ],
+          ),
+        ],
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -199,63 +220,63 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
        
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Color(0xffFFCB2D),
-        unselectedItemColor: Color(0xff6B645D),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Theme.of(context).colorScheme.background,
+      //   selectedItemColor: Color(0xffFFCB2D),
+      //   // unselectedItemColor: Color(0xff6B645D),
 
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pending_actions_outlined),
-            label: 'Notes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_rounded),
-            label: 'favourite',
-          ),
-        ],
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: true,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.pending_actions_outlined),
+      //       label: 'Notes',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.favorite_outline_rounded),
+      //       label: 'favourite',
+      //     ),
+      //   ],
 
-        currentIndex: 1, // Set the initial index to Home
-        onTap: (index) {
-          // Handle navigation on item tap
-          switch (index) {
-            case 0:
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotePage(),
-                  ));
-              // Navigator.pushNamed(context, homeScreenRoute);
-              break;
-            case 1:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ));
-              // Navigator.pushNamed(context, searchScreenRoute);
-              break;
-            case 2:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FavoriteNotesPage(),
-                  ));
-              // Navigator.pushNamed(context, uploadScreenRoute);
-              break;
-            case 3:
-              // Navigator.pushNamed(context, videosScreenRoute);
-              break;
+      //   currentIndex: 1, // Set the initial index to Home
+      //   onTap: (index) {
+      //     // Handle navigation on item tap
+      //     switch (index) {
+      //       case 0:
+      //           Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => NotePage(),
+      //             ));
+      //         // Navigator.pushNamed(context, homeScreenRoute);
+      //         break;
+      //       case 1:
+      //         Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => HomePage(),
+      //             ));
+      //         // Navigator.pushNamed(context, searchScreenRoute);
+      //         break;
+      //       case 2:
+      //         Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => FavoriteNotesPage(),
+      //             ));
+      //         // Navigator.pushNamed(context, uploadScreenRoute);
+      //         break;
+      //       case 3:
+      //         // Navigator.pushNamed(context, videosScreenRoute);
+      //         break;
        
-          }
-        },
-      ),
+      //     }
+      //   },
+      // ),
 
     );
   }

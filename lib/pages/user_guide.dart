@@ -1,8 +1,11 @@
+import 'package:GestuSpeak/themes/theme_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:GestuSpeak/components/my_drawer.dart';
 import 'package:GestuSpeak/helper/alphabet_images.dart';
+import 'package:provider/provider.dart';
 
 class UserGuidePage extends StatefulWidget {
   const UserGuidePage({super.key});
@@ -25,31 +28,41 @@ class _UserGuidePageState extends State<UserGuidePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: true,
           title: Text("User Guide"),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: Image.asset(
-                'assets/images/toggle.png',
-                width: 30,
+        actions: [
+          Row(
+            children: [
+              Text("Dark Mode"),
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
               ),
-            ),
-          ],
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-        ),
-        drawer: MyDrawer(),
+            ],
+          ),
+        ],
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 0,
+      ),
+        // drawer: MyDrawer(),
         body: ListView.builder(
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.all(5),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),     color: Theme.of(context).colorScheme.secondary,),
+         
+              margin: EdgeInsets.all(15),
               child: Row(
                 children: [
                   Expanded(
                       flex: 1,
                       child: Container(
                           height: 250,
+                          padding: EdgeInsets.only(left: 15.0),
                           child: Image.asset(alphabetSymbols[index]))),
                   SizedBox(
                     width: 5,
@@ -58,7 +71,7 @@ class _UserGuidePageState extends State<UserGuidePage> {
                       flex: 1,
                       child: Card(
                           elevation: 0.1,
-                          color: Color(0xffF2F2F2),
+                          color: Theme.of(context).colorScheme.secondary,
                           child: Container(
                               height: 250,
                               padding: EdgeInsets.all(20),

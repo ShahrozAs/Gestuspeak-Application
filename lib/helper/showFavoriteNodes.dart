@@ -71,7 +71,7 @@ class ShowFavoriteNode extends StatelessWidget {
                           height: 85,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: const Color(0xffF2F2F2),
+                            color:  Theme.of(context).colorScheme.secondary,
                           ),
                           width: double.infinity,
                           child: Padding(

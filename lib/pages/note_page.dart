@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:GestuSpeak/components/full_image.dart';
 import 'package:GestuSpeak/components/my_bottomNavigation.dart';
@@ -15,6 +17,7 @@ import 'package:GestuSpeak/pages/more_notespage.dart';
 import 'package:GestuSpeak/pages/search_page.dart';
 import 'package:GestuSpeak/pages/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key});
@@ -43,18 +46,28 @@ class _NotePageState extends State<NotePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0xffF2F2F2),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
+        // leading: InkWell(onTap: (){Navigator.pop(context);},child: Icon(Icons.arrow_back_ios_new)),
+        automaticallyImplyLeading: true,
+        title: Text("Notes"),
         actions: [
-           Padding(
-         padding: const EdgeInsets.only(right: 20.0),
-         child: Image.asset('assets/images/toggle.png',width: 30,),
-       ),
+          Row(children: [
+            Text("Dark Mode"),
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CupertinoSwitch(value: Provider.of<ThemeProvider>(context,listen: false).isDarkMode, onChanged: (value){
+               Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
+            }),
+          ),
+    
+          ],),
+   
         ],
-        backgroundColor: Colors.white,
+        backgroundColor:Theme.of(context).colorScheme.background,
         elevation: 0,
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
       body: Center(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -86,7 +99,7 @@ class _NotePageState extends State<NotePage> {
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      color: Colors.white,
+                                      color:Theme.of(context).colorScheme.background,
                                     ),
                                     width: double.infinity,
                                     child: Padding(
@@ -112,7 +125,7 @@ class _NotePageState extends State<NotePage> {
                                                         child: CircleAvatar(
                                                           radius: 60,
                                                           backgroundColor:
-                                                              Color(0xffF2F2F2),
+                                                              Theme.of(context).colorScheme.secondary,
                                                           foregroundImage: NetworkImage(
                                                               '${user?['imageLink'] ?? "https://www.moroccoupclose.com/uwagreec/2018/12/default_avatar-2048x2048.png"}'
                                                               //  "${user['imageLink']}"
@@ -126,7 +139,7 @@ class _NotePageState extends State<NotePage> {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(20),
-                                                  color: Color(0xffF2F2F2),
+                                                  color:Theme.of(context).colorScheme.secondary,
                                                 ),
                                                 child: Padding(
                                                   padding:
@@ -158,6 +171,7 @@ class _NotePageState extends State<NotePage> {
                                             child: Container(
                                               width: double.infinity,
                                               decoration: BoxDecoration(
+                                                color: Theme.of(context).colorScheme.secondary,
                                                   borderRadius:
                                                       BorderRadius.circular(20),border: Border.all(width: 1,color: Colors.black)),
                                               child:Padding(
@@ -189,7 +203,7 @@ class _NotePageState extends State<NotePage> {
                                     padding: EdgeInsets.only(bottom: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white),
+                                        color: Theme.of(context).colorScheme.background),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -200,7 +214,7 @@ class _NotePageState extends State<NotePage> {
                                         Container(
                                           height: 3.0,
                                           width: 40,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.secondary,
                                         ),
                                         SizedBox(
                                           height: 20,
@@ -243,9 +257,9 @@ class _NotePageState extends State<NotePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         selectedItemColor: Color(0xffFFCB2D),
-        unselectedItemColor: Color(0xff6B645D),
+        // unselectedItemColor: Color(0xff6B645D),
 
         showSelectedLabels: true,
         showUnselectedLabels: true,

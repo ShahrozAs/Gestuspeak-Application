@@ -11,7 +11,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
     
-      backgroundColor: Color(0xffF2F2F2),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       child: Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Column(
