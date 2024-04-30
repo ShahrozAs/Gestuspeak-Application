@@ -629,8 +629,6 @@
 //   }
 // }
 
-
-
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:GestuSpeak/auth/auth.dart';
@@ -686,6 +684,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.pop(context); // Close the saving dialog
 
       if (resp == "Success") {
+        displayMessageToUser("Node saved successfully", context);
         // Optionally show a success message or perform any other action upon successful save
         print("Node saved successfully!");
       } else {
@@ -720,6 +719,7 @@ class _HomePageState extends State<HomePage> {
     try {
       hc05 = devices.firstWhere((device) => device.name == 'HC-05');
     } catch (e) {
+      displayMessageToUser('HC-05 not found among bonded devices', context);
       print('HC-05 not found among bonded devices');
     }
     if (hc05 != null) {
@@ -744,6 +744,8 @@ class _HomePageState extends State<HomePage> {
         });
       });
     }).catchError((error) {
+      displayMessageToUser(
+          'Cannot connect, exception occurred $error', context);
       print('Cannot connect, exception occurred $error');
     });
   }
@@ -813,33 +815,96 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       // backgroundColor: Color(0xffF2F2F2),
       appBar: AppBar(
-        
         actions: [
-          Row(children: [
-            Text("Dark Mode"),
-          CupertinoSwitch(value: Provider.of<ThemeProvider>(context,listen: false).isDarkMode, onChanged: (value){
-             Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
-          }),
-   Padding(
-  padding: const EdgeInsets.only(left: 15.0,right:15.0),
-  child: InkWell(
-    onTap: () async {
-      await FirebaseAuth.instance.signOut();
-      // Navigate to LoginOrRegister page after sign out
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => AuthPage()),
-        (route) => false, // Remove all existing routes from the navigation stack
-      );
-    },
-    child: Image.asset('assets/images/logout2.png', width: 40),
-  ),
-)
-
-          ],),
-   
+          Row(
+            children: [
+              Text("Dark Mode"),
+              CupertinoSwitch(
+                  value: Provider.of<ThemeProvider>(context, listen: false)
+                      .isDarkMode,
+                  onChanged: (value) {
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .toggleTheme();
+                  }),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(
+                          child: Container(
+                            width: 400, // Adjust the width as needed
+                            // height: 500, // Adjust the height as needed
+                            child: AlertDialog(
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "Are you sure you want to logout?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          20), // Add spacing between text and buttons
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("No"),
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.black,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance.signOut();
+                                          // Navigate to LoginOrRegister page after sign out
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AuthPage()),
+                                            (route) =>
+                                                false, // Remove all existing routes from the navigation stack
+                                          );
+                                        },
+                                        child: Text("Yes"),
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Image.asset('assets/images/logout2.png', width: 40),
+                ),
+              )
+            ],
+          ),
         ],
-        backgroundColor:Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
       ),
       drawer: MyDrawer(),
@@ -848,7 +913,10 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if (!isConnected && receivedData.isEmpty)
-              Text('You don\'t have text'),
+              Text(
+                'You don\'t have text',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+              ),
             if (isConnected && receivedData.isNotEmpty)
               Text(
                 'Received Data:',
@@ -889,7 +957,8 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.only(bottom: 20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).colorScheme.background,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                 ),
                                 child: Column(
                                   children: [
@@ -897,7 +966,9 @@ class _HomePageState extends State<HomePage> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(12),
-                                          color:Theme.of(context).colorScheme.secondary),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
                                       width: double.infinity,
                                       margin: EdgeInsets.all(10),
                                       height: 200,
@@ -941,8 +1012,7 @@ class _HomePageState extends State<HomePage> {
                                           onPressed: () {
                                             saveVoiceNode();
                                             setState(() {
-                                              
-                                            receivedData = "";
+                                              receivedData = "";
                                             });
                                           },
                                           child: Text("Add note"),
@@ -994,8 +1064,7 @@ class _HomePageState extends State<HomePage> {
                                               if (receivedData.isNotEmpty) {
                                                 setState(() {
                                                   // Remove the last character from receivedData
-                                                  receivedData ="";
-                                                      
+                                                  receivedData = "";
                                                 });
                                               }
                                             },

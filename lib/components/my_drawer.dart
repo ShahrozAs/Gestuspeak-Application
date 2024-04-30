@@ -104,16 +104,75 @@ class MyDrawer extends StatelessWidget {
                   'assets/images/logout1.png',
                   width: 35,
                 ),
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  // Navigate to LoginOrRegister page after sign out
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => AuthPage()),
-                    (route) =>
-                        false, // Remove all existing routes from the navigation stack
-                  );
-                },
+             onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(
+                          child: Container(
+                            width: 400, // Adjust the width as needed
+                            // height: 500, // Adjust the height as needed
+                            child: AlertDialog(
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "Are you sure you want to logout?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          20), // Add spacing between text and buttons
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("No"),
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.black,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance.signOut();
+                                          // Navigate to LoginOrRegister page after sign out
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AuthPage()),
+                                            (route) =>
+                                                false, // Remove all existing routes from the navigation stack
+                                          );
+                                        },
+                                        child: Text("Yes"),
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
               ),
             ),
           ],

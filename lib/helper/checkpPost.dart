@@ -380,59 +380,64 @@ class _ShowPostState extends State<ShowPost> {
             .get();
 
         showDialog(
-  context: context,
-  builder: (context) {
-    return Center(
-      child: Container(
-        width: 400, // Adjust the width as needed
-        // height: 500, // Adjust the height as needed
-        child: AlertDialog(
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text("Do you want to delete this message?",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+          context: context,
+          builder: (context) {
+            return Center(
+              child: Container(
+                width: 400, // Adjust the width as needed
+                // height: 500, // Adjust the height as needed
+                child: AlertDialog(
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Do you want to delete this message?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                      ),
+                      SizedBox(
+                          height: 20), // Add spacing between text and buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("No"),
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              querySnapshot.docs.forEach((doc) async {
+                                await doc.reference.delete();
+                              });
+                              Navigator.pop(context);
+                              print('Node(s) deleted successfully!');
+                            },
+                            child: Text("Yes"),
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ),
-              SizedBox(height: 20), // Add spacing between text and buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("No"),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.black,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      querySnapshot.docs.forEach((doc) async {
-                        await doc.reference.delete();
-                      });
-                      Navigator.pop(context);
-                      print('Node(s) deleted successfully!');
-                    },
-                    child: Text("Yes"),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  },
-);
-
+            );
+          },
+        );
       } catch (e) {
         print('Error deleting node: $e');
       }
@@ -515,7 +520,7 @@ class _ShowPostState extends State<ShowPost> {
                                           : Icons.favorite_border_rounded,
                                       color: isFavorite
                                           ? Colors.red
-                                          :null, // Update color based on isFavorite
+                                          : null, // Update color based on isFavorite
                                     ),
                                   ),
                                   IconButton(
