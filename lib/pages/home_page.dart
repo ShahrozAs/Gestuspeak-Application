@@ -629,8 +629,12 @@
 //   }
 // }
 
+
+
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:GestuSpeak/auth/auth.dart';
+import 'package:GestuSpeak/auth/login_or_register.dart';
 import 'package:GestuSpeak/themes/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -816,11 +820,22 @@ class _HomePageState extends State<HomePage> {
           CupertinoSwitch(value: Provider.of<ThemeProvider>(context,listen: false).isDarkMode, onChanged: (value){
              Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
           }),
-          Padding(
-                padding: const EdgeInsets.only(left: 15.0,right:15.0),
-                child: InkWell(onTap: (){ 
-                  FirebaseAuth.instance.signOut();},child: Image.asset('assets/images/logout2.png',width: 40,)),
-              )
+   Padding(
+  padding: const EdgeInsets.only(left: 15.0,right:15.0),
+  child: InkWell(
+    onTap: () async {
+      await FirebaseAuth.instance.signOut();
+      // Navigate to LoginOrRegister page after sign out
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => AuthPage()),
+        (route) => false, // Remove all existing routes from the navigation stack
+      );
+    },
+    child: Image.asset('assets/images/logout2.png', width: 40),
+  ),
+)
+
           ],),
    
         ],
