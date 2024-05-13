@@ -41,6 +41,7 @@ void register()async{
  }
 
  //
+else{
 
  try {
    UserCredential? userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailEditController.text.trim(), password: passwordEditController.text.trim());
@@ -53,6 +54,7 @@ void register()async{
    displayMessageToUser(e.code, context);
    
  }
+}
 
 }
 

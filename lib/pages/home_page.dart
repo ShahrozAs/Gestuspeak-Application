@@ -656,6 +656,7 @@ class _HomePageState extends State<HomePage> {
   BluetoothConnection? connection;
   bool get isConnected => connection != null && connection!.isConnected;
   String receivedData = "";
+
   final FlutterTts flutterTts = FlutterTts();
   Future<void> _speak(String text) async {
     await flutterTts.setVolume(1.0);
@@ -664,6 +665,7 @@ class _HomePageState extends State<HomePage> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.speak(text);
   }
+
 
   void saveVoiceNode() async {
     try {
