@@ -631,6 +631,7 @@
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:GestuSpeak/auth/auth.dart';
 import 'package:GestuSpeak/auth/login_or_register.dart';
 import 'package:GestuSpeak/themes/theme_provider.dart';
@@ -656,6 +657,7 @@ class _HomePageState extends State<HomePage> {
   BluetoothConnection? connection;
   bool get isConnected => connection != null && connection!.isConnected;
   String receivedData = "";
+  String receivedDataString = "";
 
   final FlutterTts flutterTts = FlutterTts();
   Future<void> _speak(String text) async {
@@ -665,7 +667,6 @@ class _HomePageState extends State<HomePage> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.speak(text);
   }
-
 
   void saveVoiceNode() async {
     try {
@@ -752,17 +753,26 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // void _onDataReceived(Uint8List data) {
-  //   setState(() {
-  //     receivedData = String.fromCharCodes(data);
-  //   });
-  // }
 
-  void _onDataReceived(Uint8List data) {
+
+void _onDataReceived(Uint8List data) {
+  String receivedString = String.fromCharCodes(data);
+  
+  if (receivedString.contains("HELLO") ||
+      receivedString.contains("SHERRY") ||
+      receivedString.contains("USE BATHROOM")) {
     setState(() {
-      receivedData += String.fromCharCodes(data);
+    print("Condition met:=============================================================== $receivedString");
+      receivedDataString += receivedString+" ";
+    });
+  } else {
+    setState(() {
+    print("Else condition:============================================================== $receivedString");
+      receivedString.length==1?receivedData += receivedString:'';
     });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -787,6 +797,7 @@ class _HomePageState extends State<HomePage> {
 // }
 
     String imageAsset = '';
+    String imageAssetString = '';
 
     if (receivedData.isNotEmpty) {
       // Get the last character of receivedData
@@ -813,338 +824,606 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      // backgroundColor: Color(0xffF2F2F2),
-      appBar: AppBar(
-        actions: [
-          Row(
-            children: [
-              Text("Dark Mode"),
-              CupertinoSwitch(
-                  value: Provider.of<ThemeProvider>(context, listen: false)
-                      .isDarkMode,
-                  onChanged: (value) {
-                    Provider.of<ThemeProvider>(context, listen: false)
-                        .toggleTheme();
-                  }),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Center(
-                          child: Container(
-                            width: 400, // Adjust the width as needed
-                            // height: 500, // Adjust the height as needed
-                            child: AlertDialog(
-                              content: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      "Are you sure you want to logout?",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          20), // Add spacing between text and buttons
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("No"),
-                                        style: ElevatedButton.styleFrom(
-                                          foregroundColor: Colors.white,
-                                          backgroundColor: Colors.black,
-                                        ),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          await FirebaseAuth.instance.signOut();
-                                          // Navigate to LoginOrRegister page after sign out
-                                          Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AuthPage()),
-                                            (route) =>
-                                                false, // Remove all existing routes from the navigation stack
-                                          );
-                                        },
-                                        child: Text("Yes"),
-                                        style: ElevatedButton.styleFrom(
-                                          foregroundColor: Colors.white,
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: Image.asset('assets/images/logout2.png', width: 40),
-                ),
-              )
-            ],
-          ),
-        ],
-        backgroundColor: Theme.of(context).colorScheme.background,
-        elevation: 0,
-      ),
-      drawer: MyDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (!isConnected && receivedData.isEmpty)
-              Text(
-                'You don\'t have text',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-              ),
-            if (isConnected && receivedData.isNotEmpty)
-              Text(
-                'Received Data:',
-                style: TextStyle(fontSize: 18.0),
-              ),
-            SizedBox(height: 10),
-            if (receivedData.isNotEmpty)
-              Center(
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color.fromRGBO(33, 32, 33, 1),
-                                ),
-                                width: double.infinity,
-                                height: 300,
-                                child: Image.asset(
-                                  imageAsset,
-                                  fit: BoxFit.contain,
-                                  height: null,
-                                  width: null,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.only(bottom: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color:
-                                      Theme.of(context).colorScheme.background,
-                                ),
-                                child: Column(
+    if (receivedDataString.isNotEmpty) {
+      // Get the last character of receivedData
+      String lastCharacter =
+          receivedDataString.substring(receivedDataString.length - 2);
+
+      // Check if the last character is a valid alphabet letter
+      if (RegExp(r'[A-Za-z]').hasMatch(lastCharacter)) {
+        // Mapping last received character to corresponding image
+        int index =
+            lastCharacter.toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
+        if (index >= 0 && index < alphabetSymbols.length) {
+          imageAssetString = alphabetSymbols[index];
+        } else {
+          // If index is out of range, use a default image or handle the case appropriately
+          // For example, you can show a placeholder image or do nothing
+          imageAssetString =
+              'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+        }
+      } else {
+        // If the last character is not a valid alphabet letter, handle the case appropriately
+        // For example, you can show a placeholder image or do nothing
+        imageAssetString =
+            'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+      }
+    }
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        // backgroundColor: Color(0xffF2F2F2),
+        appBar: AppBar(
+          actions: [
+            Row(
+              children: [
+                Text("Dark Mode"),
+                CupertinoSwitch(
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) {
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme();
+                    }),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                              width: 400, // Adjust the width as needed
+                              // height: 500, // Adjust the height as needed
+                              child: AlertDialog(
+                                content: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                      width: double.infinity,
-                                      margin: EdgeInsets.all(10),
-                                      height: 200,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: SingleChildScrollView(
-                                                scrollDirection: Axis.vertical,
-                                                child: Text(
-                                                  receivedData ??
-                                                      "You dont have text",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge!
-                                                      .copyWith(fontSize: 23),
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  _speak(receivedData);
-                                                },
-                                                icon: Icon(Icons.speaker),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Text(
+                                        "Are you sure you want to logout?",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
                                       ),
                                     ),
+                                    SizedBox(
+                                        height:
+                                            20), // Add spacing between text and buttons
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            saveVoiceNode();
-                                            setState(() {
-                                              receivedData = "";
-                                            });
+                                            Navigator.pop(context);
                                           },
-                                          child: Text("Add note"),
+                                          child: Text("No"),
                                           style: ElevatedButton.styleFrom(
-                                            foregroundColor: Color(0xffFFCB2D),
-                                            backgroundColor: Color(0xff6B6A5D),
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.black,
                                           ),
                                         ),
-                                        Container(
-                                          width: 100, // Set the width
-                                          height: 40, // Set the height
-                                          decoration: BoxDecoration(
-                                            color: Color(
-                                                0xff6B6A5D), // Set the background color
-                                            borderRadius: BorderRadius.circular(
-                                                50), // Optional: Apply border radius
-                                          ),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              if (receivedData.isNotEmpty) {
-                                                setState(() {
-                                                  // Remove the last character from receivedData
-                                                  receivedData =
-                                                      receivedData.substring(
-                                                          0,
-                                                          receivedData.length -
-                                                              1);
-                                                });
-                                              }
-                                            },
-                                            icon: Icon(
-                                              Icons.backspace, size: 20,
-                                              color: Color(
-                                                  0xffFFCB2D), // Set the icon color
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 100, // Set the width
-                                          height: 40, // Set the height
-                                          decoration: BoxDecoration(
-                                            color: Color(
-                                                0xff6B6A5D), // Set the background color
-                                            borderRadius: BorderRadius.circular(
-                                                50), // Optional: Apply border radius
-                                          ),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              if (receivedData.isNotEmpty) {
-                                                setState(() {
-                                                  // Remove the last character from receivedData
-                                                  receivedData = "";
-                                                });
-                                              }
-                                            },
-                                            icon: Icon(
-                                              Icons.delete_forever, size: 20,
-                                              color: Color(
-                                                  0xffFFCB2D), // Set the icon color
-                                            ),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            await FirebaseAuth.instance
+                                                .signOut();
+                                            // Navigate to LoginOrRegister page after sign out
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AuthPage()),
+                                              (route) =>
+                                                  false, // Remove all existing routes from the navigation stack
+                                            );
+                                          },
+                                          child: Text("Yes"),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.red,
                                           ),
                                         ),
                                       ],
                                     )
                                   ],
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Image.asset('assets/images/logout2.png', width: 40),
+                  ),
+                )
+              ],
+            ),
+          ],
+          bottom: TabBar(tabs: [
+            Tab(
+              text: "Letters",
+            ),
+            Tab(
+              text: "Strings",
+            ),
+          ]),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          elevation: 0,
+        ),
+        drawer: MyDrawer(),
+        body: TabBarView(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  if (!isConnected && receivedData.isEmpty)
+                    Text(
+                      'You don\'t have text',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    ),
+                  if (isConnected && receivedData.isNotEmpty)
+                    Text(
+                      'Received Data:',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  SizedBox(height: 10),
+                  if (receivedData.isNotEmpty)
+                    Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color.fromRGBO(33, 32, 33, 1),
+                                      ),
+                                      width: double.infinity,
+                                      height: 300,
+                                      child: Image.asset(
+                                        imageAsset,
+                                        fit: BoxFit.contain,
+                                        height: null,
+                                        width: null,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary),
+                                            width: double.infinity,
+                                            margin: EdgeInsets.all(10),
+                                            height: 200,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      child: Text(
+                                                        receivedData ??
+                                                            "You dont have text",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
+                                                            .copyWith(
+                                                                fontSize: 23),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomRight,
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        _speak(receivedData);
+                                                      },
+                                                      icon: Icon(Icons.speaker),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  saveVoiceNode();
+                                                  setState(() {
+                                                    receivedData = "";
+                                                  });
+                                                },
+                                                child: Text("Add note"),
+                                                style: ElevatedButton.styleFrom(
+                                                  foregroundColor:
+                                                      Color(0xffFFCB2D),
+                                                  backgroundColor:
+                                                      Color(0xff6B6A5D),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 100, // Set the width
+                                                height: 40, // Set the height
+                                                decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xff6B6A5D), // Set the background color
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50), // Optional: Apply border radius
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (receivedData
+                                                        .isNotEmpty) {
+                                                      setState(() {
+                                                        // Remove the last character from receivedData
+                                                        receivedData =
+                                                            receivedData.substring(
+                                                                0,
+                                                                receivedData
+                                                                        .length -
+                                                                    1);
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.backspace, size: 20,
+                                                    color: Color(
+                                                        0xffFFCB2D), // Set the icon color
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 100, // Set the width
+                                                height: 40, // Set the height
+                                                decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xff6B6A5D), // Set the background color
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50), // Optional: Apply border radius
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (receivedData
+                                                        .isNotEmpty) {
+                                                      setState(() {
+                                                        // Remove the last character from receivedData
+                                                        receivedData = "";
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete_forever,
+                                                    size: 20,
+                                                    color: Color(
+                                                        0xffFFCB2D), // Set the icon color
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                ],
               ),
+            ),
+
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  if (!isConnected && receivedDataString.isEmpty)
+                    Text(
+                      'You don\'t have String',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    ),
+                  if (isConnected && receivedDataString.isNotEmpty)
+                    Text(
+                      'Received Data:',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  SizedBox(height: 10),
+                  if (receivedDataString.isNotEmpty)
+                    Center(
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color.fromRGBO(33, 32, 33, 1),
+                                      ),
+                                      width: double.infinity,
+                                      height: 300,
+                                      child: Image.asset(
+                                        imageAssetString,
+                                        fit: BoxFit.contain,
+                                        height: null,
+                                        width: null,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary),
+                                            width: double.infinity,
+                                            margin: EdgeInsets.all(10),
+                                            height: 200,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      child: Text(
+                                                        receivedDataString ??
+                                                            "You dont have text",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
+                                                            .copyWith(
+                                                                fontSize: 23),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomRight,
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        _speak(
+                                                            receivedDataString);
+                                                      },
+                                                      icon: Icon(Icons.speaker),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  saveVoiceNode();
+                                                  setState(() {
+                                                    receivedDataString = "";
+                                                  });
+                                                },
+                                                child: Text("Add note"),
+                                                style: ElevatedButton.styleFrom(
+                                                  foregroundColor:
+                                                      Color(0xffFFCB2D),
+                                                  backgroundColor:
+                                                      Color(0xff6B6A5D),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 100, // Set the width
+                                                height: 40, // Set the height
+                                                decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xff6B6A5D), // Set the background color
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50), // Optional: Apply border radius
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (receivedDataString
+                                                        .isNotEmpty) {
+                                                      setState(() {
+                                                        // Remove the last character from receivedData
+                                                        receivedDataString =
+                                                            receivedDataString
+                                                                .substring(
+                                                                    0,
+                                                                    receivedDataString
+                                                                            .length -
+                                                                        1);
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.backspace,
+                                                    size: 20,
+                                                    color: Color(
+                                                        0xffFFCB2D), // Set the icon color
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 100, // Set the width
+                                                height: 40, // Set the height
+                                                decoration: BoxDecoration(
+                                                  color: Color(
+                                                      0xff6B6A5D), // Set the background color
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50), // Optional: Apply border radius
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (receivedDataString
+                                                        .isNotEmpty) {
+                                                      setState(() {
+                                                        // Remove the last character from receivedData
+                                                        receivedDataString = "";
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete_forever,
+                                                    size: 20,
+                                                    color: Color(
+                                                        0xffFFCB2D), // Set the icon color
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+
+            // Container(
+            //   color: Colors.amber,
+            //   child: Icon(Icons.settings),
+            // )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        selectedItemColor: Color(0xffFFCB2D),
-        // unselectedItemColor: Color(0xff6B645D),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pending_actions_outlined),
-            label: 'Notes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_rounded),
-            label: 'favourite',
-          ),
-        ],
-        currentIndex: 1, // Set the initial index to Home
-        onTap: (index) {
-          // Handle navigation on item tap
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotePage(),
-                ),
-              );
-              break;
-            case 1:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
-              );
-              break;
-            case 2:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FavoriteNotesPage(),
-                ),
-              );
-              break;
-            case 3:
-              break;
-          }
-        },
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          selectedItemColor: Color(0xffFFCB2D),
+          // unselectedItemColor: Color(0xff6B645D),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pending_actions_outlined),
+              label: 'Notes',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outline_rounded),
+              label: 'favourite',
+            ),
+          ],
+          currentIndex: 1, // Set the initial index to Home
+          onTap: (index) {
+            // Handle navigation on item tap
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotePage(),
+                  ),
+                );
+                break;
+              case 1:
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ),
+                );
+                break;
+              case 2:
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoriteNotesPage(),
+                  ),
+                );
+                break;
+              case 3:
+                break;
+            }
+          },
+        ),
       ),
     );
   }
