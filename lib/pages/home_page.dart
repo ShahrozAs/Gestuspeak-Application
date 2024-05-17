@@ -759,8 +759,18 @@ void _onDataReceived(Uint8List data) {
   String receivedString = String.fromCharCodes(data);
   
   if (receivedString.contains("HELLO") ||
-      receivedString.contains("SHERRY") ||
-      receivedString.contains("USE BATHROOM")) {
+      receivedString.contains("GOODBYE") ||
+      receivedString.contains("THANK YOU") ||
+      receivedString.contains("YES") ||
+      receivedString.contains("NO") ||
+      receivedString.contains("I NEED HELP") ||
+      receivedString.contains("i WANT TO GO TO THE BATHROOM") ||
+      receivedString.contains("I AM HUNGRY") ||
+      receivedString.contains("I AM THIRSTY") ||
+      receivedString.contains("NICE TO MEET YOU") ||
+      receivedString.contains("I AM FINE") ||
+      receivedString.contains("I AM NOT FEELING WELL") ||
+      receivedString.contains("WHAT IS YOU NAME")) {
     setState(() {
     print("Condition met:=============================================================== $receivedString");
       receivedDataString += receivedString+" ";
