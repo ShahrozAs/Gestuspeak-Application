@@ -763,7 +763,9 @@ void _onDataReceived(Uint8List data) {
       receivedString.contains("THANK YOU") ||
       receivedString.contains("YES") ||
       receivedString.contains("NO") ||
-      receivedString.contains("I NEED HELP") ||
+      receivedString.contains("I WANT TO DRINK WATER") ||
+      receivedString.contains("HOW ARE YOU") ||
+      receivedString.contains("I NEED YOUR HELP") ||
       receivedString.contains("i WANT TO GO TO THE BATHROOM") ||
       receivedString.contains("I AM HUNGRY") ||
       receivedString.contains("I AM THIRSTY") ||
@@ -837,22 +839,47 @@ void _onDataReceived(Uint8List data) {
     if (receivedDataString.isNotEmpty) {
       // Get the last character of receivedData
       String lastCharacter =
-          receivedDataString.substring(receivedDataString.length - 2);
-
+          receivedDataString.substring(receivedDataString.length - 3);
+      String lastSixCharacter =
+          receivedDataString.substring(receivedDataString.length - 6);
+      print("Last 2 characters================================================================================$lastCharacter");
+      print("NUMBER OF characters================================================================================${lastCharacter.length}");
       // Check if the last character is a valid alphabet letter
-      if (RegExp(r'[A-Za-z]').hasMatch(lastCharacter)) {
-        // Mapping last received character to corresponding image
-        int index =
-            lastCharacter.toUpperCase().codeUnitAt(0) - 'A'.codeUnitAt(0);
-        if (index >= 0 && index < alphabetSymbols.length) {
-          imageAssetString = alphabetSymbols[index];
-        } else {
-          // If index is out of range, use a default image or handle the case appropriately
-          // For example, you can show a placeholder image or do nothing
-          imageAssetString =
-              'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
-        }
-      } else {
+      if (lastCharacter=="LO ") {
+       imageAssetString=stringSymbols[0];
+      } 
+      else if(lastCharacter=="OU "){
+       imageAssetString=stringSymbols[1];
+      }
+      else if(lastCharacter=="LP "){
+       imageAssetString=stringSymbols[2];
+      }
+      else if(lastCharacter=="NE "){
+       imageAssetString=stringSymbols[3];
+      }
+      else if(lastSixCharacter=="T YOU "){
+       imageAssetString=stringSymbols[4];
+      }
+      else if(lastCharacter=="RY "){
+       imageAssetString=stringSymbols[5];
+      }
+      else if(lastCharacter=="ER "){
+       imageAssetString=stringSymbols[6];
+      }
+      else if(lastCharacter=="OM "){
+       imageAssetString=stringSymbols[7];
+      }
+      else if(lastCharacter=="LL "){
+       imageAssetString=stringSymbols[8];
+      }
+      else if(lastCharacter=="ME "){
+       imageAssetString=stringSymbols[9];
+      }
+      else if(lastCharacter=="YE "){
+       imageAssetString=stringSymbols[10];
+      }
+    
+      else {
         // If the last character is not a valid alphabet letter, handle the case appropriately
         // For example, you can show a placeholder image or do nothing
         imageAssetString =
@@ -1472,4 +1499,18 @@ const alphabetSymbols = [
   'assets/images/X.png',
   'assets/images/Y.png',
   'assets/images/Z.png'
+];
+
+const stringSymbols=[
+  'assets/images/A.jpg',
+  'assets/images/B.jpg',
+  'assets/images/D.jpg',
+  'assets/images/E.jpg',
+  'assets/images/F.jpg',
+  'assets/images/G.jpg',
+  'assets/images/H.jpg',
+  'assets/images/I.jpg',
+  'assets/images/U.jpg',
+  'assets/images/W.jpg',
+  'assets/images/Y.jpg',
 ];
