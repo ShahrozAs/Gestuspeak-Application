@@ -764,15 +764,16 @@ void _onDataReceived(Uint8List data) {
       receivedString.contains("YES") ||
       receivedString.contains("NO") ||
       receivedString.contains("I WANT TO DRINK WATER") ||
-      receivedString.contains("HOW ARE YOU") ||
+      receivedString.contains("HOW ARE YOU?") ||
       receivedString.contains("I NEED YOUR HELP") ||
-      receivedString.contains("i WANT TO GO TO THE BATHROOM") ||
+      receivedString.contains("I WANT TO GO TO THE BATHROOM") ||
       receivedString.contains("I AM HUNGRY") ||
       receivedString.contains("I AM THIRSTY") ||
+      receivedString.contains("I AM SORRY") ||
       receivedString.contains("NICE TO MEET YOU") ||
       receivedString.contains("I AM FINE") ||
       receivedString.contains("I AM NOT FEELING WELL") ||
-      receivedString.contains("WHAT IS YOU NAME")) {
+      receivedString.contains("WHAT IS YOUR NAME")) {
     setState(() {
     print("Condition met:=============================================================== $receivedString");
       receivedDataString += receivedString+"\n";
@@ -840,15 +841,14 @@ void _onDataReceived(Uint8List data) {
       // Get the last character of receivedData
       String lastCharacter =
           receivedDataString.substring(receivedDataString.length - 3);
-      String lastSixCharacter =
-          receivedDataString.substring(receivedDataString.length - 6);
+    
       print("Last 2 characters================================================================================$lastCharacter");
       print("NUMBER OF characters================================================================================${lastCharacter.length}");
       // Check if the last character is a valid alphabet letter
       if (lastCharacter=="LO\n") {
        imageAssetString=stringSymbols[0];
       } 
-      else if(lastCharacter=="OU\n"){
+      else if(lastCharacter=="U?\n"){
        imageAssetString=stringSymbols[1];
       }
       else if(lastCharacter=="LP\n"){
@@ -857,9 +857,7 @@ void _onDataReceived(Uint8List data) {
       else if(lastCharacter=="NE\n"){
        imageAssetString=stringSymbols[3];
       }
-      else if(lastSixCharacter=="T YOU\n"){
-       imageAssetString=stringSymbols[4];
-      }
+    
       else if(lastCharacter=="RY\n"){
        imageAssetString=stringSymbols[5];
       }
@@ -877,6 +875,9 @@ void _onDataReceived(Uint8List data) {
       }
       else if(lastCharacter=="YE\n"){
        imageAssetString=stringSymbols[10];
+      }
+        else if(lastCharacter=="OU\n"){
+       imageAssetString=stringSymbols[4];
       }
     
       else {
