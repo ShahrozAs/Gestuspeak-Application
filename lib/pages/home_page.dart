@@ -775,7 +775,7 @@ void _onDataReceived(Uint8List data) {
       receivedString.contains("WHAT IS YOU NAME")) {
     setState(() {
     print("Condition met:=============================================================== $receivedString");
-      receivedDataString += receivedString+" ";
+      receivedDataString += receivedString+"\n";
     });
   } else {
     setState(() {
@@ -826,13 +826,13 @@ void _onDataReceived(Uint8List data) {
           // If index is out of range, use a default image or handle the case appropriately
           // For example, you can show a placeholder image or do nothing
           imageAsset =
-              'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+              'assets/images/hand.jpg'; // Replace 'default.png' with your placeholder image asset
         }
       } else {
         // If the last character is not a valid alphabet letter, handle the case appropriately
         // For example, you can show a placeholder image or do nothing
         imageAsset =
-            'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+            'assets/images/hand.jpg'; // Replace 'default.png' with your placeholder image asset
       }
     }
 
@@ -845,37 +845,37 @@ void _onDataReceived(Uint8List data) {
       print("Last 2 characters================================================================================$lastCharacter");
       print("NUMBER OF characters================================================================================${lastCharacter.length}");
       // Check if the last character is a valid alphabet letter
-      if (lastCharacter=="LO ") {
+      if (lastCharacter=="LO\n") {
        imageAssetString=stringSymbols[0];
       } 
-      else if(lastCharacter=="OU "){
+      else if(lastCharacter=="OU\n"){
        imageAssetString=stringSymbols[1];
       }
-      else if(lastCharacter=="LP "){
+      else if(lastCharacter=="LP\n"){
        imageAssetString=stringSymbols[2];
       }
-      else if(lastCharacter=="NE "){
+      else if(lastCharacter=="NE\n"){
        imageAssetString=stringSymbols[3];
       }
-      else if(lastSixCharacter=="T YOU "){
+      else if(lastSixCharacter=="T YOU\n"){
        imageAssetString=stringSymbols[4];
       }
-      else if(lastCharacter=="RY "){
+      else if(lastCharacter=="RY\n"){
        imageAssetString=stringSymbols[5];
       }
-      else if(lastCharacter=="ER "){
+      else if(lastCharacter=="ER\n"){
        imageAssetString=stringSymbols[6];
       }
-      else if(lastCharacter=="OM "){
+      else if(lastCharacter=="OM\n"){
        imageAssetString=stringSymbols[7];
       }
-      else if(lastCharacter=="LL "){
+      else if(lastCharacter=="LL\n"){
        imageAssetString=stringSymbols[8];
       }
-      else if(lastCharacter=="ME "){
+      else if(lastCharacter=="ME\n"){
        imageAssetString=stringSymbols[9];
       }
-      else if(lastCharacter=="YE "){
+      else if(lastCharacter=="YE\n"){
        imageAssetString=stringSymbols[10];
       }
     
@@ -883,7 +883,7 @@ void _onDataReceived(Uint8List data) {
         // If the last character is not a valid alphabet letter, handle the case appropriately
         // For example, you can show a placeholder image or do nothing
         imageAssetString =
-            'assets/images/hand.png'; // Replace 'default.png' with your placeholder image asset
+            'assets/images/hand.jpg'; // Replace 'default.png' with your placeholder image asset
       }
     }
 
