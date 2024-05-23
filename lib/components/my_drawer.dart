@@ -1,4 +1,5 @@
 import 'package:GestuSpeak/auth/auth.dart';
+import 'package:GestuSpeak/pages/home_automation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:GestuSpeak/pages/edit_profilePage.dart';
@@ -91,6 +92,7 @@ class MyDrawer extends StatelessWidget {
                     },
                   ),
                 ),
+  
               ],
             ),
             Padding(

@@ -55,3 +55,33 @@ const aslDescriptions = [
   "Extend your thumb and pinky finger straight out, while keeping your other fingers tucked into your palm.", // Y
   "Form a zigzag shape by extending your index finger, then your middle finger, and finally your pinky finger, while tucking your thumb and ring finger into your palm." // Z
 ];
+
+
+
+const stringSymbols=[
+  'assets/images/A.jpg',
+  'assets/images/B.jpg',
+  'assets/images/D.jpg',
+  'assets/images/E.jpg',
+  'assets/images/F.jpg',
+  'assets/images/G.jpg',
+  'assets/images/H.jpg',
+  'assets/images/I.jpg',
+  'assets/images/U.jpg',
+  'assets/images/W.jpg',
+  'assets/images/Y.jpg',
+];
+
+const stringSymbolsDescription=[
+"HELLO",
+"HOW ARE YOU?",
+"I NEED YOUR HELP",
+"I AM FINE",
+"NICE TO MEET YOU",
+"I AM HUNGRY",
+"I WANT TO DRINK WATER",
+"I WANT TO GO TO THE BATHROOM",
+"I AM NOT FEELING WELL",
+"WHAT IS YOUR NAME",
+"GOODBYE",
+];

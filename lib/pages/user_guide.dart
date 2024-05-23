@@ -26,85 +26,163 @@ class _UserGuidePageState extends State<UserGuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("User Guide"),
-        actions: [
-          Row(
-            children: [
-              Text("Dark Mode"),
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: CupertinoSwitch(
-                    value: Provider.of<ThemeProvider>(context, listen: false)
-                        .isDarkMode,
-                    onChanged: (value) {
-                      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme();
-                    }),
-              ),
-            ],
-          ),
-        ],
-        backgroundColor: Theme.of(context).colorScheme.background,
-        elevation: 0,
-      ),
-        // drawer: MyDrawer(),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            return Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),     color: Theme.of(context).colorScheme.secondary,),
-         
-              margin: EdgeInsets.all(15),
-              child: Row(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text("User Guide"),
+            actions: [
+              Row(
                 children: [
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                          height: 250,
-                          padding: EdgeInsets.only(left: 15.0),
-                          child: Image.asset(alphabetSymbols[index]))),
-                  SizedBox(
-                    width: 5,
+                  Text("Dark Mode"),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: CupertinoSwitch(
+                        value:
+                            Provider.of<ThemeProvider>(context, listen: false)
+                                .isDarkMode,
+                        onChanged: (value) {
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .toggleTheme();
+                        }),
                   ),
-                  Expanded(
-                      flex: 1,
-                      child: Card(
-                          elevation: 0.1,
-                          color: Theme.of(context).colorScheme.secondary,
-                          child: Container(
-                              height: 250,
-                              padding: EdgeInsets.all(20),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          aslDescriptions[index],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .copyWith(fontSize: 17),
-                                        )),
-                                    Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: IconButton(
-                                            onPressed: () {
-                                              _speak(aslDescriptions[index]);
-                                            },
-                                            icon: Icon(Icons.speaker)))
-                                  ],
-                                ),
-                              ))))
                 ],
               ),
-            );
-          },
-          itemCount: alphabetSymbols.length,
-        ));
+            ],
+            bottom: TabBar(tabs: [
+              Tab(
+                text: "Letters",
+              ),
+              Tab(
+                text: "Strings",
+              ),
+            ]),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            elevation: 0,
+          ),
+          // drawer: MyDrawer(),
+          body: TabBarView(
+            children: [
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    margin: EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                                height: 250,
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Image.asset(alphabetSymbols[index]))),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Card(
+                                elevation: 0.1,
+                                color: Theme.of(context).colorScheme.secondary,
+                                child: Container(
+                                    height: 250,
+                                    padding: EdgeInsets.all(20),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                aslDescriptions[index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(fontSize: 17),
+                                              )),
+                                          Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    _speak(
+                                                        aslDescriptions[index]);
+                                                  },
+                                                  icon: Icon(Icons.speaker)))
+                                        ],
+                                      ),
+                                    ))))
+                      ],
+                    ),
+                  );
+                },
+                itemCount: alphabetSymbols.length,
+              ),
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    margin: EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                                height: 250,
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Image.asset(stringSymbols[index]))),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Card(
+                                elevation: 0.1,
+                                color: Theme.of(context).colorScheme.secondary,
+                                child: Container(
+                                    height: 250,
+                                    padding: EdgeInsets.all(20),
+                          
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                stringSymbolsDescription[index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(fontSize: 17),
+                                              )),
+                                          Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    _speak(
+                                                        stringSymbolsDescription[
+                                                            index]);
+                                                  },
+                                                  icon: Icon(Icons.speaker)))
+                                        ],
+                                      ),
+                                    )))
+                      ],
+                    ),
+                  );
+                },
+                itemCount: stringSymbols.length,
+              ),
+            ],
+          )),
+    );
   }
 }
