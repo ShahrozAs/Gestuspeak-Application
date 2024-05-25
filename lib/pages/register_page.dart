@@ -10,6 +10,7 @@ import 'package:GestuSpeak/components/my_TextField.dart';
 import 'package:GestuSpeak/components/my_TextPasswordField.dart';
 import 'package:GestuSpeak/helper/helper_functions.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistorPage extends StatefulWidget {
   void Function()? onTap;
@@ -30,45 +31,6 @@ class _RegistorPageState extends State<RegistorPage> {
 
   void register() async {
     performActionIfValid();
-    // //show loading circle
-    // showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return Center(
-    //       child: CircularProgressIndicator(),
-    //     );
-    //   },
-    // );
-
-    // //match password
-    // if (passwordEditController.text != confirmPasswordEditController.text) {
-    //   Navigator.pop(context);
-    //   displayMessageToUser("Password not match!", context);
-    // } else if (userEditController.text.isEmpty ||
-    //     emailEditController.text.isEmpty ||
-    //     passwordEditController.text.isEmpty ||
-    //     confirmPasswordEditController.text.isEmpty) {
-    //   Navigator.pop(context);
-    //   displayMessageToUser(
-    //       "Please fill in all required fields before proceeding.\nThank you!",
-    //       context);
-    // }
-
-    // //
-    // else {
-    //   try {
-    //     UserCredential? userCredential = await FirebaseAuth.instance
-    //         .createUserWithEmailAndPassword(
-    //             email: emailEditController.text.trim(),
-    //             password: passwordEditController.text.trim());
-
-    //     createUserDocument(userCredential);
-    //     Navigator.pop(context);
-    //   } on FirebaseAuthException catch (e) {
-    //     Navigator.pop(context);
-    //     displayMessageToUser(e.code, context);
-    //   }
-    // }
   }
 
   void performActionIfValid() async {
@@ -87,6 +49,30 @@ class _RegistorPageState extends State<RegistorPage> {
       _showNotification('Username must not contain spaces');
       return;
     }
+
+
+
+      Future<bool> checkUsernameExists(String username) async {
+        try {
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              .collection('Users')
+              .where('username', isEqualTo: username)
+              .get();
+
+          return querySnapshot.docs.isNotEmpty;
+        } catch (e) {
+          print('Error checking username existence: $e');
+          return false;
+        }
+      }
+
+      bool usernameExists = await checkUsernameExists(username);
+      if (usernameExists) {
+        _showNotification(
+            'Username already exists. Please choose another one.');
+        return;
+      }
+
 
     // Validation for email
     final String email = emailEditController.text;
@@ -125,28 +111,30 @@ class _RegistorPageState extends State<RegistorPage> {
     } else if (confirmPassword != password) {
       _showNotification('Passwords do not match');
       return;
-    } 
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
-      try {
-        UserCredential? userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: emailEditController.text.trim(),
-                password: passwordEditController.text.trim());
+    }
 
-        createUserDocument(userCredential);
-        Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        displayMessageToUser(e.code, context);
-      }
-    
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      // Check if username exists in Firestore
+
+      UserCredential? userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailEditController.text.trim(),
+              password: passwordEditController.text.trim());
+
+      createUserDocument(userCredential);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      displayMessageToUser(e.code, context);
+    }
   }
 
   void _showNotification(String message) {

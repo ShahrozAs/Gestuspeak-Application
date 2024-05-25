@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void performActionIfValid() async{
 
-  // Validation for email
+  // // Validation for email
   final String email = emailEditController.text;
   if (email.isEmpty) {
     _showNotification('Please enter an email');
