@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
       });
     }).catchError((error) {
       displayMessageToUser(
-          'Cannot connect, exception occurred $error', context);
+          'Cannot Connect to the bluetooth\nTry again',context);
       print('Cannot connect, exception occurred $error');
     });
   }
@@ -169,6 +169,7 @@ void _onDataReceived(Uint8List data) {
       receivedString.contains("I AM THIRSTY") ||
       receivedString.contains("I AM SORRY") ||
       receivedString.contains("NICE TO MEET YOU") ||
+      receivedString.contains("MY NAME IS AHMED") ||
       receivedString.contains("I AM FINE") ||
       receivedString.contains("I AM NOT FEELING WELL") ||
       receivedString.contains("WHAT IS YOUR NAME")) {
